@@ -35,6 +35,13 @@ https://github.com/lgatto/IntroMachineLearningWithR/
 
 A short URL for this book is http://bit.ly/intromlr
 
+## License
+
+This material is licensed under the
+[Creative Commons Attribution-ShareAlike 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/). Some
+content is inspired by other sources though, see the *Credit* section
+in the material.
+
 ## Contact 
 
 Feel free to contact me for any question or comments, preferably by

@@ -21,3 +21,10 @@ Taught on
 
 - [2017-10-11 Mind Mastering Macines (M3), London](www.mcubed.london)
   ([version of material taught](https://github.com/lgatto/IntroMachineLearningWithR/tree/20171011))
+
+### License
+
+This material is licensed under the
+[Creative Commons Attribution-ShareAlike 3.0 License](http://creativecommons.org/licenses/by-sa/3.0/). Some
+content is inspired by other sources though, see the *Credit* section
+in the material.
