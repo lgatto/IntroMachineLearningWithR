@@ -43,7 +43,7 @@ where
 
 > Challenge:
 >
-> - To learn about k-means, let's use the `iris` with the sepal and
+> - To learn about k-means, let's use the `iris` dataset with the sepal and
 >   petal length variables only (to facilitate visualisation). Create
 >   such a data matrix and name it `x`
 
@@ -63,7 +63,7 @@ cl <- kmeans(x, 3, nstart = 10)
 > - The actual results of the algorithms, i.e. the cluster membership
 >   can be accessed in the `clusters` element of the clustering result
 >   output. Use it to colour the inferred clusters to generate a figure
->   like shown below.
+>   like that shown below.
 
 ```{r solkmplot, echo=FALSE, fig.cap = "k-means algorithm on sepal and petal lengths"}
 plot(x, col = cl$cluster)
@@ -139,7 +139,7 @@ a global minimum.
 
 > Challenge:
 >
-> Repeat kmeans on our `x` data multiple times, setting the number of
+> Repeat k-means on our `x` data multiple times, setting the number of
 > iterations to 1 or greater and check whether you repeatedly obtain
 > the same results. Try the same with random data of identical
 > dimensions.
@@ -203,13 +203,13 @@ plot(ks, tot_within_ss, type = "b")
 
 ### How does hierarchical clustering work
 
-**Initialisation**:  Starts by assigning each of the n point its own cluster
+**Initialisation**:  Starts by assigning each of the n points its own cluster
 
 **Iteration**
 
 1. Find the two nearest clusters, and join them together, leading to
    n-1 clusters
-2. Continue merging cluster process until all are grouped into a
+2. Continue the cluster merging process until all are grouped into a
    single cluster
 
 **Termination:** All observations are grouped within a single cluster.
@@ -323,7 +323,7 @@ as well as supervised methods, as we will see in the next chapter.
 
 A typical way to pre-process the data prior to learning is to scale
 the data, or apply principal component analysis (next section). Scaling
-assures that all data columns have mean 0 and standard deviate 1.
+assures that all data columns have a mean of 0 and standard deviation of 1.
 
 In R, scaling is done with the `scale` function.
 
@@ -348,11 +348,11 @@ plot(hcl2, main = "scaled data")
 ## Principal component analysis (PCA)
 
 **Dimensionality reduction** techniques are widely used and versatile
-techniques that can be used o
+techniques that can be used to:
 
 - find structure in features
 - pre-processing for other ML algorithms, and
-- as an aid in visualisation.
+- aid in visualisation.
 
 The basic principle of dimensionality reduction techniques is to
 transform the data into a new space that summarise properties of the
