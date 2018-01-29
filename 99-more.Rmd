@@ -44,7 +44,7 @@ correctly assigned by the algorithms.
 For a multi-class problem, the macro F1 (mean of class F1s) can be
 used.
 
-## Credit
+## Credit and acknowledgements
 
 Many parts of this course have been influenced by the
 DataCamp's
@@ -52,6 +52,9 @@ DataCamp's
 in particular the *Machine Learning Toolbox* (supervised learning
 chapter) and the *Unsupervised Learning in R* (unsupervised learning
 chapter) courses.
+
+[Jamie Lendrum](https://github.com/jl5000) has addressed numerous
+typos in the first version.
 
 The very hands-on approach has also been influenced by the Software
 and Data Carpentry lessons and teaching styles.
