@@ -63,7 +63,7 @@ data to identify and annotate new classes in the dataset (also called
 novelty detection). 
 
 **Reinforcement learning**, the learning algorithm performs a task
-using feedback from operating in a real of synthetic environment.
+using feedback from operating in a real or synthetic environment.
 
 ## Material and methods
 
@@ -100,7 +100,7 @@ through the chapters:
 - `r CRANpkg("mlbench")`
 - `r CRANpkg("class")`
 - `r CRANpkg("caTools")`
-- `r CRANpkg("randomForst")`
+- `r CRANpkg("randomForest")`
 - `r CRANpkg("impute")`
 - `r CRANpkg("ranger")`
 - `r CRANpkg("kernlab")`
