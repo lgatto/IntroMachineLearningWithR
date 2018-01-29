@@ -10,21 +10,21 @@ is qualitative, and **regression**, where the output is quantitative.
 When two sets of labels, or classes, are available, one speaks of
 **binary classification**. A classical example thereof is labelling an
 email as *spam* or *not spam*. When more classes are to be learnt, one
-speaks of a **multi-class problem**, such as annotation a new *Iris*
+speaks of a **multi-class problem**, such as annotation of a new *Iris*
 example as being from the *setosa*, *versicolor* or *virginica*
 species. In these cases, the output is a single label (of one of the
 anticipated classes). If multiple labels may be assigned to each
-examples, one speaks of **multi-label classification**.
+example, one speaks of **multi-label classification**.
 
 ## Preview
 
 To start this chapter, let's use a simple, but useful classification
-algorithm, K nearest neighbours (kNN) to classify the *iris*
+algorithm, k-nearest neighbours (kNN) to classify the *iris*
 flowers. We will use the `knn` function from the `r CRANpkg("class")`
 package.
 
-K nearest neighbours works by directly measuring the (euclidean)
-distance between observations and infer the class of unlabelled data
+K-nearest neighbours works by directly measuring the (Euclidean)
+distance between observations and inferring the class of unlabelled data
 from the class of its nearest neighbours. In the figure below, the
 unlabelled instances *1* and *2* will be assigned classes *c1* (blue)
 and *c2* (red) as their closest neighbours are red and blue,
@@ -101,8 +101,8 @@ table(knnres, iris$Species[nw])
 mean(knnres == iris$Species[nw])
 ```
 
-We have omitted and important argument from `knn`, which is the
-parameter *k* of the classifier. This value *k* defines how many
+We have omitted an important argument from `knn`, which is the
+parameter *k* of the classifier. This parameter defines how many
 nearest neighbours will be considered to assign a class to a new
 unlabelled observation. From the arguments of the function,
 
@@ -157,16 +157,16 @@ that we need to consider:
 
 In supervised machine learning, we have a desired output and thus know
 precisely what is to be computed. It thus becomes possible to directly
-evaluate a model using a quantifiable and object metric. For
+evaluate a model using a quantifiable and objective metric. For
 regression, we will use the **root mean squared error** (RMSE), which
 is what linear regression (`lm` in R) seeks to minimise. For
 classification, we will use **model prediction accuracy**.
 
 Typically, we won't want to calculate any of these metrics using
 observations that were also used to calculate the model. This
-approach, called **in-sample error** lead to optimistic assessment of
+approach, called **in-sample error** leads to optimistic assessment of
 our model. Indeed, the model has already *seen* these data upon
-construction, and is does considered optimised the these observations
+construction, and is considered optimised for these observations
 in particular; it is said to **over-fit** the data. We prefer to
 calculate an **out-of-sample error**, on new data, to gain a better
 idea of how to model performs on unseen data, and estimate how well
@@ -196,7 +196,7 @@ p <- predict(model, diamonds)
 
 > Challenge
 > 
-> Calculate the root mean squares error for the prediction above 
+> Calculate the root mean squared error for the prediction above 
 
 <details>
 ```{r}
@@ -208,9 +208,9 @@ rmse_in
 </details>
 
 Let's now repeat the exercise above, but by calculating the
-out-of-sample RMSE. We are prepare a 80/20 split of the data and use
-80% to fit our model predict the target variable (this is called the
-**training data**), the price, on the 20% unseen data (the **testing
+out-of-sample RMSE. We prepare a 80/20 split of the data and use
+80% to fit our model, and predict the target variable (this is called the
+**training data**), the price, on the 20% of unseen data (the **testing
 data**).
 
 > Challenge
@@ -234,16 +234,16 @@ rmse_out
 ```
 </details>
 
-The values for the out-of-sample RMSE will vary depending on the what
-exact split was used. The diamonds is a rather extensive data, and
-thus even when building out model using a subset of the available data
+The values for the out-of-sample RMSE will vary depending on what
+exact split was used. The diamonds is a rather extensive data set, and
+thus even when building our model using a subset of the available data
 (80% above), we manage to generate a model with a low RMSE, and
 possibly lower than the in-sample error. 
 
 When dealing with datasets of smaller sizes, however, the presence of
 a single outlier in the train and test data split can substantially
-influence the model and the RMSE. We can't rely on such an approach an
-need a more robust one, where, we can generate and use multiple,
+influence the model and the RMSE. We can't rely on such an approach and
+need a more robust one where we can generate and use multiple,
 different train/test sets to sample a set of RMSEs, leading to a
 better estimate of the out-of-sample RMSE.
 
@@ -258,13 +258,13 @@ The figure below illustrates the cross validation procedure, creating
 size of the data permits it). We split the data into 3 *random* and
 complementary folds, so that each data point appears exactly once in
 each fold. This leads to a total test set size that is identical to
-the size as the full dataset but is composed of out-of-sample
+the size of the full dataset but is composed of out-of-sample
 predictions. 
 
 ![Schematic of 3-fold cross validation producing three training (blue) and testing (white) splits.](./figure/xval.png)
 
 After cross-validation, all models used within each fold are
-discarded, and a new model is build using the whole dataset, with the
+discarded, and a new model is built using the whole dataset, with the
 best model parameter(s), i.e those that generalised over all folds.
 
 This makes cross-validation quite time consuming, as it takes *x+1*
@@ -282,7 +282,7 @@ the `train` function in `r CRANpkg("caret")`. Below, we apply it to
 the diamond price example that we used when introducing the model
 performance.
 
-- We start by setting a random to be able to reproduce the example.
+- We start by setting a random seed to be able to reproduce the example.
 - We specify the method (the learning algorithm) we want to use. Here,
   we use `"lm"`, but, as we will see later, there are many others to
   choose from[^1]. 
@@ -348,13 +348,13 @@ assess its accuracy to do so.
 ### Confusion matrix
 
 Instead of calculating an error between predicted value and known
-value, in classification we will directly compare of the predicted
-class matches the known label. To do so, rather than calculating the
+value, in classification we will directly compare the predicted
+class matches with the known label. To do so, rather than calculating the
 mean accuracy as we did above, in the introductory kNN example, we can
 calculate a **confusion matrix**.
 
-A confusion matrix to contrast predictions to actual results. Correct
-results are *true positives* (TP) and *true negatives* that are found
+A confusion matrix contrasts predictions to actual results. Correct
+results are *true positives* (TP) and *true negatives* (TN) are found
 along the diagonal. All other cells indicate false results, i.e *false
 negatives* (FN) and *false positives* (FP).
 
@@ -366,7 +366,7 @@ colnames(cmat) <- c("Reference Yes", "Reference No")
 knitr::kable(cmat)
 ```
 
-The values that populate this table will depend on a the cutoff that
+The values that populate this table will depend on the cutoff that
 we set to define whether the classifier should predict *Yes* or
 *No*. Intuitively, we might want to use 0.5 as a threshold, and assign
 every result with a probability > 0.5 to *Yes* and *No* otherwise. 
@@ -395,7 +395,7 @@ cl <- ifelse(p > 0.5, "M", "R")
 table(cl, test$Class)
 ```
 
-The caret package offers it's own, more informative function to
+The caret package offers its own, more informative function to
 calculate a confusion matrix:
 
 ```{r soncmat}
@@ -457,8 +457,8 @@ the model performance along all possible thresholds:
 
 - an AUC of 0.5 corresponds to a random model
 - values > 0.5 do better than a random guess
-- a value 1 represents a perfect model
-- a value 1 represents a model that is always wrong
+- a value of 1 represents a perfect model
+- a value 0 represents a model that is always wrong
 
 ### AUC in `caret`
 
@@ -497,10 +497,10 @@ over-fitting and hence quite popular. They however require
 hyperparameters to be tuned manually, like the value *k* in the
 example above.
 
-Building random forest starts by generating a high number of
+Building a random forest starts by generating a high number of
 individual decision trees. A single decision tree isn't very accurate,
 but many different trees built using different inputs (with
-bootstrapped inputs, features and observations) enable to explore a
+bootstrapped inputs, features and observations) enable us to explore a
 broad search space and, once combined, produce accurate models, a
 technique called *bootstrap aggregation* or *bagging*.
 
@@ -508,8 +508,8 @@ technique called *bootstrap aggregation* or *bagging*.
 
 A great advantage of decision trees is that they make a complex
 decision simpler by breaking it down into smaller, simpler decisions
-using divide-and-conquer strategy. They basically identify a set of
-if-else conditions that split data according to the value if the
+using a divide-and-conquer strategy. They basically identify a set of
+if-else conditions that split the data according to the value of the
 features.
 
 
@@ -527,7 +527,7 @@ Decision trees choose splits based on most homogeneous partitions, and
 lead to smaller and more homogeneous partitions over their iterations. 
 
 An issue with single decision trees is that they can grow, and become
-large and complex with many branches, with corresponds to
+large and complex with many branches, which corresponds to
 over-fitting. Over-fitting models noise, rather than general patterns in
 the data, focusing on subtle patterns (outliers) that won't
 generalise.
@@ -537,7 +537,7 @@ can happen as a pre-condition when growing the tree, or afterwards, by
 pruning a large tree. 
 
 - *Pre-pruning*: stop growing process, i.e stops divide-and-conquer
-  after a certain number of iterations (grows tree at certain
+  after a certain number of iterations (grows tree to a certain
   predefined level), or requires a minimum number of observations in
   each mode to allow splitting.
   
@@ -548,7 +548,7 @@ pruning a large tree.
 ### Training a random forest
 
 Let's return to random forests and train a model using the `train`
-infrastructure from `r CRANpkg("caret")`:
+function from `r CRANpkg("caret")`:
 
 ```{r loadrange, echo=FALSE, message=FALSE}
 suppressPackageStartupMessages(library("ranger"))
@@ -566,10 +566,10 @@ print(model)
 plot(model)
 ```
 
-The main hyperparameters is *mtry*, i.e. the number of randomly selected
-variables used at each split. 2 variables produce random models, while
-100s of variables tend to be less random, but risk
-over-fitting. `caret` automate the tuning of the hyperparameter using a
+The main hyperparameter is *mtry*, i.e. the number of randomly selected
+variables used at each split. Two variables produce random models, while
+hundreds of variables tend to be less random, but risk
+over-fitting. The `caret` package can automate the tuning of the hyperparameter using a
 **grid search**, which can be parametrised by setting `tuneLength`
 (that sets the number of hyperparameter values to test) or directly
 defining the `tuneGrid` (the hyperparameter values), which requires
@@ -628,9 +628,9 @@ such cases.
   contains a very high proportion of NAs, drop the feature
   altogether. These approaches are only applicable when the proportion
   of missing values is relatively small. Otherwise, it could lead to
-  loosing too much data. 
+  losing too much data. 
 
-- Impute missing values. 
+- Impute (replace) missing values. 
 
 Data imputation can however have critical consequences depending on the
 proportion of missing values and their nature. From a statistical
@@ -679,33 +679,33 @@ methods, that can directly be passed when training the model.
 
 ### Median imputation
 
-Imputation using median of features. This methods works well if the
+Imputation using median of features. This method works well if the
 data are missing at random. 
 
 ```{r, eval=TRUE}
 train(X, Y, preProcess = "medianImpute")
 ```
 
-Imputing using caret also allows to optimise the imputation based on
+Imputing using caret also allows us to optimise the imputation based on
 the cross validation splits, as `train` will do median imputation
 inside each fold.
 
-### KNN imputation
+### kNN imputation
 
 If there is a systematic bias in the missing values, then median
 imputation is known to produce incorrect results. kNN imputation will
-impute missing values using on other, similar non-missing rows. The
+impute missing values using other, similar non-missing rows. The
 default value is 5.
 
 ```{r, eval=TRUE}
 train(X, Y, preProcess = "knnImpute")
 ```
 
-## Scaling and scaling
+## Scaling and centering
 
 We have seen in the *Unsupervised learning* chapter how data at
 different scales can substantially disrupt a learning
-algorithm. Scaling (division by the standard deviation) and centring
+algorithm. Scaling (division by the standard deviation) and centering
 (subtraction of the mean) can also be applied directly during model
 training by setting. Note that they are set to be applied by default
 prior to training.
@@ -715,8 +715,8 @@ train(X, Y, preProcess = "scale")
 train(X, Y, preProcess = "center")
 ```
 
-As we have discussed in the section about Principal component
-analysis, PCA can be used as pre-processing method, generating a set
+As we have discussed in the section on Principal Component
+Analysis, PCA can be used as pre-processing method, generating a set
 of high-variance and perpendicular predictors, preventing
 collinearity.
 
@@ -733,9 +733,9 @@ center, scale, pca.
 train(X, Y, preProcess = c("knnImpute", "center", "scale", "pca"))
 ```
 
-The pre-processing methods above represent a classical order or
+The pre-processing methods above represent a classical order of
 operations, starting with data imputation to remove missing values,
-then centring and scaling, prior to PCA.
+then centering and scaling, prior to PCA.
 
 <!-- ## Low information predictors -->
 
@@ -752,7 +752,7 @@ For further details, see `?preProcess`.
 ## Model selection
 
 In this final section, we are going to compare different predictive
-models and chose the best one using the tools presented in the
+models and choose the best one using the tools presented in the
 previous sections.
 
 To to so, we are going to first create a set of common training
@@ -762,7 +762,7 @@ comparison between the different models.
 
 For this section, we are going to use the `churn` data. Below, we see
 that about 15% of the customers churn. It is important to maintain
-this proportion in all the folds.
+this proportion in all of the folds.
 
 ```{r churndata}
 library("C50")
@@ -809,7 +809,7 @@ myControl <- trainControl(
 
 ### `glmnet` model
 
-The `glmnet` is a liner model with build-in variable selection and
+The `glmnet` is a linear model with built-in variable selection and
 coefficient regularisation.
 
 ```{r glmnetmodel, fig.cap=""}
@@ -950,7 +950,7 @@ little pre-processing.
 >
 > If you haven't done so, consider pre-processing the data prior to
 > training for a model that didn't perform well and assess whether
-> pre-processing affected to modelling.
+> pre-processing affected the modelling.
 
 <details>
 ```{r svmmodel2, cache=TRUE, fig.cap=""}
