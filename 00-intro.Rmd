@@ -7,9 +7,8 @@ familiarity with scripting in general and R in particular. The
 workshop will offer a hands-on overview of typical machine learning
 applications in R, including unsupervised (clustering, such as
 hierarchical and k-means clustering, and dimensionality reduction,
-such as principal component analysis) and supervised (classification
-and regression, such as K-nearest neighbour and linear regression)
-methods. We will also address questions such as model selection using
+such as principal component analysis) and supervised methods (classification
+and regression, such as k-nearest neighbour and linear regression). We will also address questions such as model selection using
 cross-validation. The material has an important hands-on component and
 readers should have a computer running R 3.4.1 or later.
 
@@ -22,7 +21,7 @@ readers should have a computer running R 3.4.1 or later.
   courses focuses on unsupervised and supervised methods. 
 
 - The course contains numerous exercises to provide numerous
-  opportunity to apply the newly acquired material.
+  opportunities to apply the newly acquired material.
   
 - Participants are expected to be familiar with the R syntax and basic
   plotting functionality.
@@ -36,14 +35,14 @@ readers should have a computer running R 3.4.1 or later.
 R is one of the major languages for data science. It provides
 excellent visualisation features, which is essential to explore the
 data before submitting it to any automated learning, as well as
-assessing the results of the learning algorithm. Many R package
-for [machine learning](https://cran.r-project.org/) are available of
+assessing the results of the learning algorithm. Many R packages
+for [machine learning](https://cran.r-project.org/) are available off
 the shelf and many modern methods in statistical learning are
 implemented in R as part of their development.
 
 There are however other viable alternatives that benefit from similar
-advantages. If we consider python for example,
-the [scikit-learn](http://scikit-learn.org/stable/index.html) software
+advantages. If we consider Python for example,
+the [scikit-learn](http://scikit-learn.org/stable/index.html) library
 provides all the tools that we will discuss in this course.
 
 ## Overview of machine learning (ML)
@@ -110,4 +109,6 @@ through the chapters:
 - `r CRANpkg("rpart")`
 - `r CRANpkg("rpart.plot")`
 
-See the full session informtion for more details.
+See the full session information for more details.
+
+A more comprehensive list of machine learning libraries in R can be found at the [CRAN Task View for Machine Learning and Statistical Learning](https://cran.r-project.org/web/views/MachineLearning.html).
