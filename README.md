@@ -19,7 +19,7 @@ Read the latest version of the the course at http://bit.ly/intromlr
 
 Taught on
 
-- [2017-10-11 Mind Mastering Macines (M3), London](http://www.mcubed.london)
+- [2017-10-11 Mind Mastering Macines (M3), London](http://2017.mcubed.london/)
   ([version of material taught](https://github.com/lgatto/IntroMachineLearningWithR/tree/20171011))
 
 ### License
