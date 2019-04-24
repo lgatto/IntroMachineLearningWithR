@@ -1,4 +1,4 @@
-# Supervised Learning 
+# Supervised Learning
 
 ## Introduction
 
@@ -115,7 +115,7 @@ we prefer to look at more neighbours and infer the new class using a
 vote based on more labels?
 
 > Challenge
-> 
+>
 > Repeat the kNN classification above by using another value of k, and
 > compare the accuracy of this new model to the one above. Make sure
 > to use the same `tr` and `nw` training and new data to avoid any
@@ -147,7 +147,7 @@ that we need to consider:
 
 - How can we do a good job in training and testing data? In the
   example above, we choose random training and new data.
-  
+
 - How can we estimate our model parameters (*k* in the example above)
   so as to obtain good classification accuracy?
 
@@ -195,14 +195,14 @@ p <- predict(model, diamonds)
 ```
 
 > Challenge
-> 
-> Calculate the root mean squared error for the prediction above 
+>
+> Calculate the root mean squared error for the prediction above
 
 <details>
 ```{r}
 ## Error on prediction
 error <- p - diamonds$price
-rmse_in <- sqrt(mean(error^2)) ## in-sample RMSE 
+rmse_in <- sqrt(mean(error^2)) ## in-sample RMSE
 rmse_in
 ```
 </details>
@@ -214,7 +214,7 @@ out-of-sample RMSE. We prepare a 80/20 split of the data and use
 data**).
 
 > Challenge
-> 
+>
 > 1. Let's create a **random** 80/20 split to define the test and
 >    train subsets.
 > 2. Train a regression model on the training data.
@@ -229,7 +229,7 @@ test <- sample(nrow(diamonds), ntest)
 model <- lm(price ~ ., data = diamonds[test, ])
 p <- predict(model, diamonds[-test, ])
 error <- p - diamonds$price[-test]
-rmse_out <- sqrt(mean(error^2)) ## out-of-sample RMSE 
+rmse_out <- sqrt(mean(error^2)) ## out-of-sample RMSE
 rmse_out
 ```
 </details>
@@ -238,7 +238,7 @@ The values for the out-of-sample RMSE will vary depending on what
 exact split was used. The diamonds is a rather extensive data set, and
 thus even when building our model using a subset of the available data
 (80% above), we manage to generate a model with a low RMSE, and
-possibly lower than the in-sample error. 
+possibly lower than the in-sample error.
 
 When dealing with datasets of smaller sizes, however, the presence of
 a single outlier in the train and test data split can substantially
@@ -259,7 +259,7 @@ size of the data permits it). We split the data into 3 *random* and
 complementary folds, so that each data point appears exactly once in
 each fold. This leads to a total test set size that is identical to
 the size of the full dataset but is composed of out-of-sample
-predictions. 
+predictions.
 
 ![Schematic of 3-fold cross validation producing three training (blue) and testing (white) splits.](./figure/xval.png)
 
@@ -269,11 +269,11 @@ best model parameter(s), i.e those that generalised over all folds.
 
 This makes cross-validation quite time consuming, as it takes *x+1*
 (where *x* in the number of cross-validation folds) times as long as
-fitting a single model, but is essential. 
+fitting a single model, but is essential.
 
 Note that it is important to maintain the class proportions within the
 different folds, i.e. respect the proportion of the different classes
-in the original data. This is also taken care when using the 
+in the original data. This is also taken care when using the
 `r CRANpkg("caret")` package.
 
 
@@ -285,7 +285,7 @@ performance.
 - We start by setting a random seed to be able to reproduce the example.
 - We specify the method (the learning algorithm) we want to use. Here,
   we use `"lm"`, but, as we will see later, there are many others to
-  choose from[^1]. 
+  choose from[^1].
 - We then set the out-of-sample training procedure to 10-fold cross
   validation (`method = "cv"` and `number = 10`). To simplify the
   output in the material for better readability, we set the verbosity
@@ -300,9 +300,9 @@ performance.
 ```{r trxval}
 set.seed(42)
 model <- train(price ~ ., diamonds,
-               method = "lm", 
-               trControl = trainControl(method = "cv", 
-                                        number = 10, 
+               method = "lm",
+               trControl = trainControl(method = "cv",
+                                        number = 10,
                                         verboseIter = FALSE))
 model
 ```
@@ -318,7 +318,7 @@ rmse_xval
 ```
 
 > Challenge
-> 
+>
 > Train a linear model using 10-fold cross-validation and then use it
 > to predict the median value of owner-occupied homes in Boston from
 > the `Boston` dataset as described above. Then calculate the RMSE.
@@ -330,8 +330,8 @@ library("MASS")
 data(Boston)
 model <- train(medv ~ .,
                Boston,
-               method = "lm", 
-               trControl = trainControl(method = "cv", 
+               method = "lm",
+               trControl = trainControl(method = "cv",
                                         number = 10))
 model
 p <- predict(model, Boston)
@@ -343,7 +343,7 @@ sqrt(mean(p - Boston$medv)^2)
 
 Above, we have used the RMSE to assess the performance of our
 regression model. When using a classification algorithm, we want to
-assess its accuracy to do so. 
+assess its accuracy to do so.
 
 ### Confusion matrix
 
@@ -369,7 +369,7 @@ knitr::kable(cmat)
 The values that populate this table will depend on the cutoff that
 we set to define whether the classifier should predict *Yes* or
 *No*. Intuitively, we might want to use 0.5 as a threshold, and assign
-every result with a probability > 0.5 to *Yes* and *No* otherwise. 
+every result with a probability > 0.5 to *Yes* and *No* otherwise.
 
 Let's experiment with this using the `Sonar` dataset, and see if we
 can differentiate mines from rocks using a logistic classification
@@ -399,7 +399,7 @@ The caret package offers its own, more informative function to
 calculate a confusion matrix:
 
 ```{r soncmat}
-confusionMatrix(cl, test$Class)
+confusionMatrix(factor(cl), test$Class)
 ```
 
 We get, among others
@@ -412,14 +412,14 @@ We get, among others
 - FP rate (fall-out): $\frac{FP}{FP + TN}$
 
 > Challenge
-> 
+>
 > Compare the model accuracy (or any other metric) using thresholds of
 > 0.1 and 0.9.
 
 <details>
 ```{r confmatsol}
-confusionMatrix(ifelse(p > 0.9, "M", "R"), test$Class)
-confusionMatrix(ifelse(p > 0.1, "M", "R"), test$Class)
+confusionMatrix(factor(ifelse(p > 0.9, "M", "R")), test$Class)
+confusionMatrix(factor(ifelse(p > 0.1, "M", "R")), test$Class)
 ```
 </details>
 
@@ -431,14 +431,14 @@ threshold to catch fewer mines with more certainty.
 
 This illustrates the need to adequately balance TP and FP rates. We
 need to have a way to do a cost-benefit analysis, and the solution
-will often depend on the question/problem. 
+will often depend on the question/problem.
 
 One solution would be to try with different classification
 thresholds. Instead of inspecting numerous confusion matrices, it is
 possible to automate the calculation of the TP and FP rates at each
-threshold and visualise all results along a ROC curve. 
+threshold and visualise all results along a ROC curve.
 
-This can be done with the `colAUC` function from the 
+This can be done with the `colAUC` function from the
 `r CRANpkg("caTools")` package:
 
 
@@ -478,7 +478,7 @@ myControl <- trainControl(
 ## Train glm with custom trainControl: model
 model <- train(Class ~ ., Sonar,
                method = "glm", ## to use glm's logistic regression
-               trControl = myControl) 
+               trControl = myControl)
 
 ## Print model to console
 print(model)
@@ -524,27 +524,27 @@ table(p, Sonar$Class)
 ```
 
 Decision trees choose splits based on most homogeneous partitions, and
-lead to smaller and more homogeneous partitions over their iterations. 
+lead to smaller and more homogeneous partitions over their iterations.
 
 An issue with single decision trees is that they can grow, and become
 large and complex with many branches, which corresponds to
 over-fitting. Over-fitting models noise, rather than general patterns in
 the data, focusing on subtle patterns (outliers) that won't
 generalise.
-  
+
 To avoid over-fitting, individual decision trees are pruned. Pruning
 can happen as a pre-condition when growing the tree, or afterwards, by
-pruning a large tree. 
+pruning a large tree.
 
 - *Pre-pruning*: stop growing process, i.e stops divide-and-conquer
   after a certain number of iterations (grows tree to a certain
   predefined level), or requires a minimum number of observations in
   each mode to allow splitting.
-  
+
 - *Post-pruning*: grow a large and complex tree, and reduce its size;
   nodes and branches that have a negligible effect on the
   classification accuracy are removed.
-  
+
 ### Training a random forest
 
 Let's return to random forests and train a model using the `train`
@@ -558,7 +558,7 @@ suppressPackageStartupMessages(library("ranger"))
 set.seed(12)
 model <- train(Class ~ .,
                data = Sonar,
-               method = "ranger") 
+               method = "ranger")
 print(model)
 ```
 
@@ -585,10 +585,11 @@ model <- train(Class ~ .,
 ```{r tuneGrid, fig.cap="", cache=TRUE}
 set.seed(42)
 myGrid <- expand.grid(mtry = c(5, 10, 20, 40, 60),
-                     splitrule = c("gini", "extratrees"))
+                      splitrule = c("gini", "extratrees"),
+                      min.node.size = 1) ## Minimal node size; default 1 for classification
 model <- train(Class ~ .,
                data = Sonar,
-               method = "ranger", 
+               method = "ranger",
                tuneGrid = myGrid,
                trControl = trainControl(method = "cv",
                                        number = 5,
@@ -598,9 +599,9 @@ plot(model)
 ```
 
 > Challenge
-> 
+>
 > Experiment with training a random forest model as described above,
-> by using 5-fold cross validation, and setting a `tuneLength` of 5. 
+> by using 5-fold cross validation, and setting a `tuneLength` of 5.
 
 <details>
 ```{r rftrainsol, cache=TRUE, fig.cap=""}
@@ -628,9 +629,9 @@ such cases.
   contains a very high proportion of NAs, drop the feature
   altogether. These approaches are only applicable when the proportion
   of missing values is relatively small. Otherwise, it could lead to
-  losing too much data. 
+  losing too much data.
 
-- Impute (replace) missing values. 
+- Impute (replace) missing values.
 
 Data imputation can however have critical consequences depending on the
 proportion of missing values and their nature. From a statistical
@@ -680,7 +681,7 @@ methods, that can directly be passed when training the model.
 ### Median imputation
 
 Imputation using median of features. This method works well if the
-data are missing at random. 
+data are missing at random.
 
 ```{r, eval=TRUE}
 train(X, Y, preProcess = "medianImpute")
@@ -815,7 +816,7 @@ coefficient regularisation.
 ```{r glmnetmodel, fig.cap=""}
 glm_model <- train(churn ~ .,
                    churnTrain,
-                   metric = "ROC", 
+                   metric = "ROC",
                    method = "glmnet",
                    tuneGrid = expand.grid(
                        alpha = 0:1,
@@ -828,10 +829,10 @@ plot(glm_model)
 
 Below, we are going to repeat this same modelling with a variety of
 different classifiers, some of which we haven't looked at. This
-illustrates another advantage of of using **meta-packages** such as 
+illustrates another advantage of of using **meta-packages** such as
 `r CRANpkg("caret")`, that provide a consistant interface to different
 backends (in this case for machine learning). Once we have mastered
-the interface, it becomes easy to apply it to a new backend. 
+the interface, it becomes easy to apply it to a new backend.
 
 Note that some of the model training below will take some time to run,
 depending on the tuning parameter settings.
@@ -839,7 +840,7 @@ depending on the tuning parameter settings.
 ### random forest model
 
 > Challenge
-> 
+>
 > Apply a random forest model, making sure you reuse the same train
 > control object.
 
@@ -847,11 +848,12 @@ depending on the tuning parameter settings.
 ```{r rfmodel, cache=TRUE, fig.cap=""}
 rf_model <- train(churn ~ .,
                   churnTrain,
-                  metric = "ROC", 
+                  metric = "ROC",
                   method = "ranger",
                   tuneGrid = expand.grid(
                       mtry = c(2, 5, 10, 19),
-                      splitrule = c("gini", "extratrees")),
+                      splitrule = c("gini", "extratrees"),
+                      min.node.size = 1),
                   trControl = myControl)
 print(rf_model)
 plot(rf_model)
@@ -861,15 +863,15 @@ plot(rf_model)
 ### kNN model
 
 > Challenge
-> 
+>
 > Apply a kNN model, making sure you reuse the same train
 > control object.
 
 <details>
-```{r knnmodel, cache=TRUE, fig.cap=""}	
+```{r knnmodel, cache=TRUE, fig.cap=""}
 knn_model <- train(churn ~ .,
                    churnTrain,
-                   metric = "ROC", 
+                   metric = "ROC",
                    method = "knn",
                    tuneLength = 20,
                    trControl = myControl)
@@ -881,7 +883,7 @@ plot(knn_model)
 ### Support vector machine model
 
 > Challenge
-> 
+>
 > Apply a svm model, making sure you reuse the same train control
 > object. Hint: Look at `names(getModelInfo())` for all possible model
 > names.
@@ -890,7 +892,7 @@ plot(knn_model)
 ```{r svmmodel, cache=TRUE, fig.cap=""}
 svm_model <- train(churn ~ .,
                    churnTrain,
-                   metric = "ROC", 
+                   metric = "ROC",
                    method = "svmRadial",
                    tuneLength = 10,
                    trControl = myControl)
@@ -902,7 +904,7 @@ plot(svm_model)
 ### Naive Bayes
 
 > Challenge
-> 
+>
 > Apply a naive Bayes model, making sure you reuse the same train
 > control object.
 
@@ -910,7 +912,7 @@ plot(svm_model)
 ```{r nbmodel, fig.cap=""}
 nb_model <- train(churn ~ .,
                   churnTrain,
-                  metric = "ROC", 
+                  metric = "ROC",
                   method = "naive_bayes",
                   trControl = myControl)
 
@@ -944,7 +946,7 @@ lattice::bwplot(resamp, metric = "ROC")
 
 The random forest appears to be the best one. This might be related to
 its ability to cope well with different types of input and require
-little pre-processing. 
+little pre-processing.
 
 > Challenge
 >
@@ -956,14 +958,14 @@ little pre-processing.
 ```{r svmmodel2, cache=TRUE, fig.cap=""}
 svm_model1 <- train(churn ~ .,
                     churnTrain,
-                    metric = "ROC", 
+                    metric = "ROC",
                     method = "svmRadial",
                     tuneLength = 10,
                     trControl = myControl)
 
 svm_model2 <- train(churn ~ .,
                     churnTrain[, c(2, 6:20)],
-                    metric = "ROC", 
+                    metric = "ROC",
                     method = "svmRadial",
                     preProcess = c("scale", "center", "pca"),
                     tuneLength = 10,

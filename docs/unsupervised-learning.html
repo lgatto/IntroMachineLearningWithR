@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>An Introduction to Machine Learning with R</title>
+  <title>Chapter 4 Unsupervised Learning | An Introduction to Machine Learning with R</title>
   <meta name="description" content="An hands-on introduction to machine learning with R.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="An Introduction to Machine Learning with R" />
+  <meta property="og:title" content="Chapter 4 Unsupervised Learning | An Introduction to Machine Learning with R" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   <meta name="github-repo" content="lgatto/IntroMachineLearningWithR" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="An Introduction to Machine Learning with R" />
+  <meta name="twitter:title" content="Chapter 4 Unsupervised Learning | An Introduction to Machine Learning with R" />
   
   <meta name="twitter:description" content="An hands-on introduction to machine learning with R." />
   
@@ -25,7 +25,7 @@
 <meta name="author" content="Laurent Gatto">
 
 
-<meta name="date" content="2017-10-18">
+<meta name="date" content="2019-04-24">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +36,7 @@
 <link rel="next" href="supervised-learning.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
@@ -47,49 +48,78 @@
 
 
 
-<script src="libs/htmlwidgets-0.9/htmlwidgets.js"></script>
-<script src="libs/datatables-binding-0.2/datatables.js"></script>
-<link href="libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.5/datatables.js"></script>
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 
 
 <style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 </head>
@@ -169,9 +199,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="5.6" data-path="supervised-learning.html"><a href="supervised-learning.html#data-pre-processing-1"><i class="fa fa-check"></i><b>5.6</b> Data pre-processing</a><ul>
 <li class="chapter" data-level="5.6.1" data-path="supervised-learning.html"><a href="supervised-learning.html#missing-values"><i class="fa fa-check"></i><b>5.6.1</b> Missing values</a></li>
 <li class="chapter" data-level="5.6.2" data-path="supervised-learning.html"><a href="supervised-learning.html#median-imputation"><i class="fa fa-check"></i><b>5.6.2</b> Median imputation</a></li>
-<li class="chapter" data-level="5.6.3" data-path="supervised-learning.html"><a href="supervised-learning.html#knn-imputation"><i class="fa fa-check"></i><b>5.6.3</b> KNN imputation</a></li>
+<li class="chapter" data-level="5.6.3" data-path="supervised-learning.html"><a href="supervised-learning.html#knn-imputation"><i class="fa fa-check"></i><b>5.6.3</b> kNN imputation</a></li>
 </ul></li>
-<li class="chapter" data-level="5.7" data-path="supervised-learning.html"><a href="supervised-learning.html#scaling-and-scaling"><i class="fa fa-check"></i><b>5.7</b> Scaling and scaling</a><ul>
+<li class="chapter" data-level="5.7" data-path="supervised-learning.html"><a href="supervised-learning.html#scaling-and-centering"><i class="fa fa-check"></i><b>5.7</b> Scaling and centering</a><ul>
 <li class="chapter" data-level="5.7.1" data-path="supervised-learning.html"><a href="supervised-learning.html#multiple-pre-processing-methods"><i class="fa fa-check"></i><b>5.7.1</b> Multiple pre-processing methods</a></li>
 </ul></li>
 <li class="chapter" data-level="5.8" data-path="supervised-learning.html"><a href="supervised-learning.html#model-selection-1"><i class="fa fa-check"></i><b>5.8</b> Model selection</a><ul>
@@ -191,7 +221,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li class="chapter" data-level="" data-path="final-notes.html"><a href="final-notes.html#deep-learning-in-r"><i class="fa fa-check"></i>Deep learning in R</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="final-notes.html"><a href="final-notes.html#model-performance-1"><i class="fa fa-check"></i><b>6.2</b> Model performance</a></li>
-<li class="chapter" data-level="6.3" data-path="final-notes.html"><a href="final-notes.html#credit"><i class="fa fa-check"></i><b>6.3</b> Credit</a></li>
+<li class="chapter" data-level="6.3" data-path="final-notes.html"><a href="final-notes.html#credit-and-acknowledgements"><i class="fa fa-check"></i><b>6.3</b> Credit and acknowledgements</a></li>
 <li class="chapter" data-level="6.4" data-path="final-notes.html"><a href="final-notes.html#references-and-further-reading"><i class="fa fa-check"></i><b>6.4</b> References and further reading</a></li>
 <li class="chapter" data-level="6.5" data-path="final-notes.html"><a href="final-notes.html#session-information"><i class="fa fa-check"></i><b>6.5</b> Session information</a></li>
 </ul></li>
@@ -216,42 +246,60 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1><span class="header-section-number">Chapter 4</span> Unsupervised Learning</h1>
 <div id="introduction" class="section level2">
 <h2><span class="header-section-number">4.1</span> Introduction</h2>
-<p>In <strong>unsupervised learning</strong> (UML), no labels are provided, and the learning algorithm focuses solely on detecting structure in unlabelled input data. One generally differentiates between</p>
+<p>In <strong>unsupervised learning</strong> (UML), no labels are provided, and the
+learning algorithm focuses solely on detecting structure in unlabelled
+input data. One generally differentiates between</p>
 <ul>
-<li><p><strong>Clustering</strong>, where the goal is to find homogeneous subgroups within the data; the grouping is based on distance between observations.</p></li>
-<li><p><strong>Dimensionality reduction</strong>, where the goal is to identify patterns in the features of the data. Dimensionality reduction is often used to facilitate visualisation of the data, as well as a pre-processing method before supervised learning.</p></li>
+<li><p><strong>Clustering</strong>, where the goal is to find homogeneous subgroups
+within the data; the grouping is based on distance between
+observations.</p></li>
+<li><p><strong>Dimensionality reduction</strong>, where the goal is to identify patterns in
+the features of the data. Dimensionality reduction is often used to
+facilitate visualisation of the data, as well as a pre-processing
+method before supervised learning.</p></li>
 </ul>
 <p>UML presents specific challenges and benefits:</p>
 <ul>
 <li>there is no single goal in UML</li>
-<li>there is generally much more unlabelled data available than labelled data.</li>
+<li>there is generally much more unlabelled data available than labelled
+data.</li>
 </ul>
 </div>
 <div id="k-means-clustering" class="section level2">
 <h2><span class="header-section-number">4.2</span> k-means clustering</h2>
-<p>The k-means clustering algorithms aims at partitioning <em>n</em> observations into a fixed number of <em>k</em> clusters. The algorithm will find homogeneous clusters.</p>
+<p>The k-means clustering algorithms aims at partitioning <em>n</em>
+observations into a fixed number of <em>k</em> clusters. The algorithm will
+find homogeneous clusters.</p>
 <p>In R, we use</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">stats<span class="op">::</span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">stats<span class="op">::</span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)</code></pre>
 <p>where</p>
 <ul>
 <li><code>x</code> is a numeric data matrix</li>
 <li><code>centers</code> is the pre-defined number of clusters</li>
-<li>the k-means algorithm has a random component and can be repeated <code>nstart</code> times to improve the returned model</li>
+<li>the k-means algorithm has a random component and can be repeated
+<code>nstart</code> times to improve the returned model</li>
 </ul>
 <blockquote>
 <p>Challenge:</p>
 <ul>
-<li>To learn about k-means, let’s use the <code>iris</code> with the sepal and petal length variables only (to facilitate visualisation). Create such a data matrix and name it <code>x</code></li>
+<li>To learn about k-means, let’s use the <code>iris</code> dataset with the sepal and
+petal length variables only (to facilitate visualisation). Create
+such a data matrix and name it <code>x</code></li>
 </ul>
 </blockquote>
 <blockquote>
 <ul>
-<li>Run the k-means algorithm on the newly generated data <code>x</code>, save the results in a new variable <code>cl</code>, and explore its output when printed.</li>
+<li>Run the k-means algorithm on the newly generated data <code>x</code>, save
+the results in a new variable <code>cl</code>, and explore its output when
+printed.</li>
 </ul>
 </blockquote>
 <blockquote>
 <ul>
-<li>The actual results of the algorithms, i.e. the cluster membership can be accessed in the <code>clusters</code> element of the clustering result output. Use it to colour the inferred clusters to generate a figure like shown below.</li>
+<li>The actual results of the algorithms, i.e. the cluster membership
+can be accessed in the <code>clusters</code> element of the clustering result
+output. Use it to colour the inferred clusters to generate a figure
+like that shown below.</li>
 </ul>
 </blockquote>
 <div class="figure"><span id="fig:solkmplot"></span>
@@ -260,18 +308,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Figure 4.1: k-means algorithm on sepal and petal lengths
 </p>
 </div>
-<p><details></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">i &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;Length&quot;</span>, <span class="kw">names</span>(iris))
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">i &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;Length&quot;</span>, <span class="kw">names</span>(iris))
 x &lt;-<span class="st"> </span>iris[, i]
 cl &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
-<span class="kw">plot</span>(x, <span class="dt">col =</span> cl<span class="op">$</span>cluster)</code></pre></div>
-<p></details></p>
+<span class="kw">plot</span>(x, <span class="dt">col =</span> cl<span class="op">$</span>cluster)</code></pre>
+</details>
 <div id="how-does-k-means-work" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> How does k-means work</h3>
 <p><strong>Initialisation</strong>: randomly assign class membership</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12</span>)
 init &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">3</span>, <span class="kw">nrow</span>(x), <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-<span class="kw">plot</span>(x, <span class="dt">col =</span> init)</code></pre></div>
+<span class="kw">plot</span>(x, <span class="dt">col =</span> init)</code></pre>
 <div class="figure"><span id="fig:kmworksinit"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/kmworksinit-1.png" alt="k-means random intialisation" width="672" />
 <p class="caption">
@@ -280,11 +328,14 @@ Figure 4.2: k-means random intialisation
 </div>
 <p><strong>Iteration</strong>:</p>
 <ol style="list-style-type: decimal">
-<li>Calculate the centre of each subgroup as the average position of all observations is that subgroup.</li>
-<li>Each observation is then assigned to the group of its nearest centre.</li>
+<li>Calculate the centre of each subgroup as the average position of
+all observations is that subgroup.</li>
+<li>Each observation is then assigned to the group of its nearest
+centre.</li>
 </ol>
-<p>It’s also possible to stop the algorithm after a certain number of iterations, or once the centres move less than a certain distance.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<p>It’s also possible to stop the algorithm after a certain number of
+iterations, or once the centres move less than a certain distance.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(x, <span class="dt">col =</span> init)
 centres &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) <span class="kw">colMeans</span>(x[init <span class="op">==</span><span class="st"> </span>i, ], ))
 centres &lt;-<span class="st"> </span><span class="kw">t</span>(centres)
@@ -297,14 +348,15 @@ ki &lt;-<span class="st"> </span><span class="kw">apply</span>(tmp, <span class=
 ki &lt;-<span class="st"> </span>ki[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)]
 
 <span class="kw">plot</span>(x, <span class="dt">col =</span> ki)
-<span class="kw">points</span>(centres[, <span class="dv">1</span>], centres[, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</code></pre></div>
+<span class="kw">points</span>(centres[, <span class="dv">1</span>], centres[, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</code></pre>
 <div class="figure"><span id="fig:kmworksiter"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/kmworksiter-1.png" alt="k-means iteration: calculate centers (left) and assign new cluster membership (right)" width="1152" />
 <p class="caption">
 Figure 4.3: k-means iteration: calculate centers (left) and assign new cluster membership (right)
 </p>
 </div>
-<p><strong>Termination</strong>: Repeat iteration until no point changes its cluster membership.</p>
+<p><strong>Termination</strong>: Repeat iteration until no point changes its cluster
+membership.</p>
 <div class="figure">
 <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/K-means_convergence.gif" alt="k-means convergence (credit Wikipedia)" />
 <p class="caption">k-means convergence (credit Wikipedia)</p>
@@ -312,55 +364,63 @@ Figure 4.3: k-means iteration: calculate centers (left) and assign new cluster m
 </div>
 <div id="model-selection" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> Model selection</h3>
-<p>Due to the random initialisation, one can obtain different clustering results. When k-means is run multiple times, the best outcome, i.e. the one that generates the smallest <em>total within cluster sum of squares (SS)</em>, is selected. The total within SS is calculated as:</p>
+<p>Due to the random initialisation, one can obtain different clustering
+results. When k-means is run multiple times, the best outcome,
+i.e. the one that generates the smallest <em>total within cluster sum of
+squares (SS)</em>, is selected. The total within SS is calculated as:</p>
 <p>For each cluster results:</p>
 <ul>
-<li>for each observation, determine the squared euclidean distance from observation to centre of cluster</li>
+<li>for each observation, determine the squared euclidean distance from
+observation to centre of cluster</li>
 <li>sum all distances</li>
 </ul>
-<p>Note that this is a <strong>local minimum</strong>; there is no guarantee to obtain a global minimum.</p>
+<p>Note that this is a <strong>local minimum</strong>; there is no guarantee to obtain
+a global minimum.</p>
 <blockquote>
 <p>Challenge:</p>
-<p>Repeat kmeans on our <code>x</code> data multiple times, setting the number of iterations to 1 or greater and check whether you repeatedly obtain the same results. Try the same with random data of identical dimensions.</p>
+<p>Repeat k-means on our <code>x</code> data multiple times, setting the number of
+iterations to 1 or greater and check whether you repeatedly obtain
+the same results. Try the same with random data of identical
+dimensions.</p>
 </blockquote>
-<p><details></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
 cl2 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
-<span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</code></pre></div>
+<span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</code></pre>
 <pre><code>##    
 ##      1  2  3
-##   1 58  0  0
-##   2  0 41  0
-##   3  0  0 51</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)
+##   1  0 41  0
+##   2 51  0  0
+##   3  0  0 58</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)
 cl2 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)
-<span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</code></pre></div>
+<span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</code></pre>
 <pre><code>##    
 ##      1  2  3
-##   1  0  0 41
-##   2  0 51  0
-##   3 58  0  0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
+##   1 41  0  0
+##   2  0  0 58
+##   3  0 51  0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
 xr &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="kw">prod</span>(<span class="kw">dim</span>(x))), <span class="dt">ncol =</span> <span class="kw">ncol</span>(x))
 cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(xr, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)
 cl2 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(xr, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)
-<span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</code></pre></div>
+<span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</code></pre>
 <pre><code>##    
 ##      1  2  3
-##   1 46  0  6
-##   2  1 51  0
-##   3  0  1 45</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diffres &lt;-<span class="st"> </span>cl1<span class="op">$</span>cluster <span class="op">!=</span><span class="st"> </span>cl2<span class="op">$</span>cluster
+##   1  0 52  0
+##   2  0  0 46
+##   3 52  0  0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">diffres &lt;-<span class="st"> </span>cl1<span class="op">$</span>cluster <span class="op">!=</span><span class="st"> </span>cl2<span class="op">$</span>cluster
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(xr, <span class="dt">col =</span> cl1<span class="op">$</span>cluster, <span class="dt">pch =</span> <span class="kw">ifelse</span>(diffres, <span class="dv">19</span>, <span class="dv">1</span>))
-<span class="kw">plot</span>(xr, <span class="dt">col =</span> cl2<span class="op">$</span>cluster, <span class="dt">pch =</span> <span class="kw">ifelse</span>(diffres, <span class="dv">19</span>, <span class="dv">1</span>))</code></pre></div>
+<span class="kw">plot</span>(xr, <span class="dt">col =</span> cl2<span class="op">$</span>cluster, <span class="dt">pch =</span> <span class="kw">ifelse</span>(diffres, <span class="dv">19</span>, <span class="dv">1</span>))</code></pre>
 <div class="figure"><span id="fig:selrep"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/selrep-1.png" alt="Different k-means results on the same (random) data" width="1152" />
 <p class="caption">
 Figure 4.4: Different k-means results on the same (random) data
 </p>
 </div>
-<p></details></p>
+</details>
 </div>
 <div id="how-to-determine-the-number-of-clusters" class="section level3">
 <h3><span class="header-section-number">4.2.3</span> How to determine the number of clusters</h3>
@@ -372,27 +432,31 @@ Figure 4.4: Different k-means results on the same (random) data
 <p><img src="IntroMachineLearningWithR_files/figure-html/kmelbow-1.png" width="672" /></p>
 <blockquote>
 <p>Challenge</p>
-<p>Calculate the total within sum of squares for k from 1 to 5 for our <code>x</code> test data, and reproduce the figure above.</p>
+<p>Calculate the total within sum of squares for k from 1 to 5 for our
+<code>x</code> test data, and reproduce the figure above.</p>
 </blockquote>
-<p><details></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ks &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">ks &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>
 tot_within_ss &lt;-<span class="st"> </span><span class="kw">sapply</span>(ks, <span class="cf">function</span>(k) {
     cl &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, k, <span class="dt">nstart =</span> <span class="dv">10</span>)
     cl<span class="op">$</span>tot.withinss
 })
-<span class="kw">plot</span>(ks, tot_within_ss, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</code></pre></div>
-<p><img src="IntroMachineLearningWithR_files/figure-html/solkmelbow-1.png" width="672" /> </details></p>
+<span class="kw">plot</span>(ks, tot_within_ss, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</code></pre>
+<img src="IntroMachineLearningWithR_files/figure-html/solkmelbow-1.png" width="672" />
+</details>
 </div>
 </div>
 <div id="hierarchical-clustering" class="section level2">
 <h2><span class="header-section-number">4.3</span> Hierarchical clustering</h2>
 <div id="how-does-hierarchical-clustering-work" class="section level3">
 <h3><span class="header-section-number">4.3.1</span> How does hierarchical clustering work</h3>
-<p><strong>Initialisation</strong>: Starts by assigning each of the n point its own cluster</p>
+<p><strong>Initialisation</strong>: Starts by assigning each of the n points its own cluster</p>
 <p><strong>Iteration</strong></p>
 <ol style="list-style-type: decimal">
-<li>Find the two nearest clusters, and join them together, leading to n-1 clusters</li>
-<li>Continue merging cluster process until all are grouped into a single cluster</li>
+<li>Find the two nearest clusters, and join them together, leading to
+n-1 clusters</li>
+<li>Continue the cluster merging process until all are grouped into a
+single cluster</li>
 </ol>
 <p><strong>Termination:</strong> All observations are grouped within a single cluster.</p>
 <div class="figure"><span id="fig:hcldata"></span>
@@ -401,7 +465,9 @@ tot_within_ss &lt;-<span class="st"> </span><span class="kw">sapply</span>(ks, <
 Figure 4.5: Hierarchical clustering: initialisation (left) and colour-coded results after iteration (right).
 </p>
 </div>
-<p>The results of hierarchical clustering are typically visualised along a <strong>dendrogram</strong>, where the distance between the clusters is proportional to the branch lengths.</p>
+<p>The results of hierarchical clustering are typically visualised along
+a <strong>dendrogram</strong>, where the distance between the clusters is
+proportional to the branch lengths.</p>
 <div class="figure"><span id="fig:hcldendro"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/hcldendro-1.png" alt="Visualisation of the hierarchical clustering results on a dendrogram" width="672" />
 <p class="caption">
@@ -410,17 +476,19 @@ Figure 4.6: Visualisation of the hierarchical clustering results on a dendrogram
 </div>
 <p>In R:</p>
 <ul>
-<li>Calculate the distance using <code>dist</code>, typically the Euclidean distance.</li>
+<li>Calculate the distance using <code>dist</code>, typically the Euclidean
+distance.</li>
 <li>Hierarchical clustering on this distance matrix using <code>hclust</code></li>
 </ul>
 <blockquote>
 <p>Challenge</p>
-<p>Apply hierarchical clustering on the <code>iris</code> data and generate a dendrogram using the dedicated <code>plot</code> method.</p>
+<p>Apply hierarchical clustering on the <code>iris</code> data and generate a
+dendrogram using the dedicated <code>plot</code> method.</p>
 </blockquote>
-<p><details></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">dist</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">dist</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])
 hcl &lt;-<span class="st"> </span><span class="kw">hclust</span>(d)
-hcl</code></pre></div>
+hcl</code></pre>
 <pre><code>## 
 ## Call:
 ## hclust(d = d)
@@ -428,12 +496,16 @@ hcl</code></pre></div>
 ## Cluster method   : complete 
 ## Distance         : euclidean 
 ## Number of objects: 150</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hcl)</code></pre></div>
-<p><img src="IntroMachineLearningWithR_files/figure-html/hclsol-1.png" width="672" /> </details></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hcl)</code></pre>
+<img src="IntroMachineLearningWithR_files/figure-html/hclsol-1.png" width="672" />
+</details>
 </div>
 <div id="defining-clusters" class="section level3">
 <h3><span class="header-section-number">4.3.2</span> Defining clusters</h3>
-<p>After producing the hierarchical clustering result, we need to <em>cut the tree (dendrogram)</em> at a specific height to defined the clusters. For example, on our test dataset above, we could decide to cut it at a distance around 1.5, with would produce 2 clusters.</p>
+<p>After producing the hierarchical clustering result, we need to <em>cut
+the tree (dendrogram)</em> at a specific height to defined the
+clusters. For example, on our test dataset above, we could decide to
+cut it at a distance around 1.5, with would produce 2 clusters.</p>
 <div class="figure"><span id="fig:cuthcl"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/cuthcl-1.png" alt="Cutting the dendrogram at height 1.5." width="672" />
 <p class="caption">
@@ -448,99 +520,121 @@ Figure 4.7: Cutting the dendrogram at height 1.5.
 <blockquote>
 <p>Challenge</p>
 <ul>
-<li>Cut the iris hierarchical clustering result at a height to obtain 3 clusters by setting <code>h</code>.</li>
-<li>Cut the iris hierarchical clustering result at a height to obtain 3 clusters by setting directly <code>k</code>, and verify that both provide the same results.</li>
+<li>Cut the iris hierarchical clustering result at a height to obtain
+3 clusters by setting <code>h</code>.</li>
+<li>Cut the iris hierarchical clustering result at a height to obtain
+3 clusters by setting directly <code>k</code>, and verify that both provide
+the same results.</li>
 </ul>
 </blockquote>
-<p><details></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hcl)
-<span class="kw">abline</span>(<span class="dt">h =</span> <span class="fl">3.9</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre></div>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hcl)
+<span class="kw">abline</span>(<span class="dt">h =</span> <span class="fl">3.9</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
 <p><img src="IntroMachineLearningWithR_files/figure-html/cuthclsol-1.png" width="672" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>)</code></pre>
 <pre><code>##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 ##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 3 2 3 2 3 2 3 3 3 3 2 3 2 3 3 2 3
 ##  [71] 2 3 2 2 2 2 2 2 2 3 3 3 3 2 3 2 2 2 3 3 3 2 3 3 3 3 3 2 3 3
 ##  [ reached getOption(&quot;max.print&quot;) -- omitted 50 entries ]</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cutree</span>(hcl, <span class="dt">h =</span> <span class="fl">3.9</span>)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cutree</span>(hcl, <span class="dt">h =</span> <span class="fl">3.9</span>)</code></pre>
 <pre><code>##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 ##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 3 2 3 2 3 2 3 3 3 3 2 3 2 3 3 2 3
 ##  [71] 2 3 2 2 2 2 2 2 2 3 3 3 3 2 3 2 2 2 3 3 3 2 3 3 3 3 3 2 3 3
 ##  [ reached getOption(&quot;max.print&quot;) -- omitted 50 entries ]</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">identical</span>(<span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>), <span class="kw">cutree</span>(hcl, <span class="dt">h =</span> <span class="fl">3.9</span>))</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">identical</span>(<span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>), <span class="kw">cutree</span>(hcl, <span class="dt">h =</span> <span class="fl">3.9</span>))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p></details></p>
+</details>
 <blockquote>
 <p>Challenge</p>
-<p>Using the same value <code>k = 3</code>, verify if k-means and hierarchical clustering produce the same results on the <code>iris</code> data.</p>
+<p>Using the same value <code>k = 3</code>, verify if k-means and hierarchical
+clustering produce the same results on the <code>iris</code> data.</p>
 <p>Which one, if any, is correct?</p>
 </blockquote>
-<p><details></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">km &lt;-<span class="st"> </span><span class="kw">kmeans</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
+<details>
+<pre class="sourceCode r"><code class="sourceCode r">km &lt;-<span class="st"> </span><span class="kw">kmeans</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
 hcl &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))
-<span class="kw">table</span>(km<span class="op">$</span>cluster, <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>))</code></pre></div>
+<span class="kw">table</span>(km<span class="op">$</span>cluster, <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>))</code></pre>
 <pre><code>##    
 ##      1  2  3
-##   1  0 38  0
-##   2 50  0  0
-##   3  0 34 28</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+##   1  0 34 28
+##   2  0 38  0
+##   3 50  0  0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length, <span class="dt">col =</span> km<span class="op">$</span>cluster, <span class="dt">main =</span> <span class="st">&quot;k-means&quot;</span>)
-<span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length, <span class="dt">col =</span> <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>), <span class="dt">main =</span> <span class="st">&quot;Hierarchical clustering&quot;</span>)</code></pre></div>
+<span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length, <span class="dt">col =</span> <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>), <span class="dt">main =</span> <span class="st">&quot;Hierarchical clustering&quot;</span>)</code></pre>
 <p><img src="IntroMachineLearningWithR_files/figure-html/iris2algs-1.png" width="1152" /></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Checking with the labels provided with the iris data
-<span class="kw">table</span>(iris<span class="op">$</span>Species, km<span class="op">$</span>cluster)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## Checking with the labels provided with the iris data</span>
+<span class="kw">table</span>(iris<span class="op">$</span>Species, km<span class="op">$</span>cluster)</code></pre>
 <pre><code>##             
 ##               1  2  3
-##   setosa      0 50  0
-##   versicolor  2  0 48
-##   virginica  36  0 14</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(iris<span class="op">$</span>Species, <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>))</code></pre></div>
+##   setosa      0  0 50
+##   versicolor 48  2  0
+##   virginica  14 36  0</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(iris<span class="op">$</span>Species, <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>))</code></pre>
 <pre><code>##             
 ##               1  2  3
 ##   setosa     50  0  0
 ##   versicolor  0 23 27
 ##   virginica   0 49  1</code></pre>
-<p></details></p>
+</details>
 </div>
 </div>
 <div id="pre-processing" class="section level2">
 <h2><span class="header-section-number">4.4</span> Pre-processing</h2>
-<p>Many of the machine learning methods that are regularly used are sensitive to difference scales. This applies to unsupervised methods as well as supervised methods, as we will see in the next chapter.</p>
-<p>A typical way to pre-process the data prior to learning is to scale the data, or apply principal component analysis (next section). Scaling assures that all data columns have mean 0 and standard deviate 1.</p>
+<p>Many of the machine learning methods that are regularly used are
+sensitive to difference scales. This applies to unsupervised methods
+as well as supervised methods, as we will see in the next chapter.</p>
+<p>A typical way to pre-process the data prior to learning is to scale
+the data, or apply principal component analysis (next section). Scaling
+assures that all data columns have a mean of 0 and standard deviation of 1.</p>
 <p>In R, scaling is done with the <code>scale</code> function.</p>
 <blockquote>
 <p>Challenge</p>
-<p>Using the <code>mtcars</code> data as an example, verify that the variables are of different scales, then scale the data. To observe the effect different scales, compare the hierarchical clusters obtained on the original and scaled data.</p>
+<p>Using the <code>mtcars</code> data as an example, verify that the variables are
+of different scales, then scale the data. To observe the effect
+different scales, compare the hierarchical clusters obtained on the
+original and scaled data.</p>
 </blockquote>
-<p><details></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colMeans</span>(mtcars)</code></pre></div>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colMeans</span>(mtcars)</code></pre>
 <pre><code>##        mpg        cyl       disp         hp       drat         wt 
 ##  20.090625   6.187500 230.721875 146.687500   3.596563   3.217250 
 ##       qsec         vs         am       gear       carb 
 ##  17.848750   0.437500   0.406250   3.687500   2.812500</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hcl1 &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(mtcars))
+<pre class="sourceCode r"><code class="sourceCode r">hcl1 &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(mtcars))
 hcl2 &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(<span class="kw">scale</span>(mtcars)))
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(hcl1, <span class="dt">main =</span> <span class="st">&quot;original data&quot;</span>)
-<span class="kw">plot</span>(hcl2, <span class="dt">main =</span> <span class="st">&quot;scaled data&quot;</span>)</code></pre></div>
-<p><img src="IntroMachineLearningWithR_files/figure-html/scalesol-1.png" width="1152" /> </details></p>
+<span class="kw">plot</span>(hcl2, <span class="dt">main =</span> <span class="st">&quot;scaled data&quot;</span>)</code></pre>
+<img src="IntroMachineLearningWithR_files/figure-html/scalesol-1.png" width="1152" />
+</details>
 </div>
 <div id="principal-component-analysis-pca" class="section level2">
 <h2><span class="header-section-number">4.5</span> Principal component analysis (PCA)</h2>
-<p><strong>Dimensionality reduction</strong> techniques are widely used and versatile techniques that can be used o</p>
+<p><strong>Dimensionality reduction</strong> techniques are widely used and versatile
+techniques that can be used to:</p>
 <ul>
 <li>find structure in features</li>
 <li>pre-processing for other ML algorithms, and</li>
-<li>as an aid in visualisation.</li>
+<li>aid in visualisation.</li>
 </ul>
-<p>The basic principle of dimensionality reduction techniques is to transform the data into a new space that summarise properties of the whole data set along a reduced number of dimensions. These are then ideal candidates used to visualise the data along these reduced number of informative dimensions.</p>
+<p>The basic principle of dimensionality reduction techniques is to
+transform the data into a new space that summarise properties of the
+whole data set along a reduced number of dimensions. These are then
+ideal candidates used to visualise the data along these reduced number
+of informative dimensions.</p>
 <div id="how-does-it-work" class="section level3">
 <h3><span class="header-section-number">4.5.1</span> How does it work</h3>
-<p>Principal Component Analysis (PCA) is a technique that transforms the original n-dimensional data into a new n-dimensional space.</p>
+<p>Principal Component Analysis (PCA) is a technique that transforms the
+original n-dimensional data into a new n-dimensional space.</p>
 <ul>
-<li>These new dimensions are linear combinations of the original data, i.e. they are composed of proportions of the original variables.</li>
-<li>Along these new dimensions, called principal components, the data expresses most of its variability along the first PC, then second, …</li>
-<li>Principal components are orthogonal to each other, i.e. non-correlated.</li>
+<li>These new dimensions are linear combinations of the original data,
+i.e. they are composed of proportions of the original variables.</li>
+<li>Along these new dimensions, called principal components, the data
+expresses most of its variability along the first PC, then second,
+…</li>
+<li>Principal components are orthogonal to each other,
+i.e. non-correlated.</li>
 </ul>
 <div class="figure"><span id="fig:pcaex"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/pcaex-1.png" alt="Original data (left). PC1 will maximise the variability while minimising the residuals (centre). PC2 is orthogonal to PC1 (right)." width="1152" />
@@ -549,18 +643,21 @@ Figure 4.8: Original data (left). PC1 will maximise the variability while minimi
 </p>
 </div>
 <p>In R, we can use the <code>prcomp</code> function.</p>
-<p>Let’s explore PCA on the <code>iris</code> data. While it contains only 4 variables, is already becomes difficult to visualise the 3 groups along all these dimensions.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(iris[, <span class="op">-</span><span class="dv">5</span>], <span class="dt">col =</span> iris[, <span class="dv">5</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</code></pre></div>
+<p>Let’s explore PCA on the <code>iris</code> data. While it contains only 4
+variables, is already becomes difficult to visualise the 3 groups
+along all these dimensions.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(iris[, <span class="dv">-5</span>], <span class="dt">col =</span> iris[, <span class="dv">5</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</code></pre>
 <p><img src="IntroMachineLearningWithR_files/figure-html/irispairs-1.png" width="672" /></p>
 <p>Let’s use PCA to reduce the dimension.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">irispca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[, <span class="op">-</span><span class="dv">5</span>])
-<span class="kw">summary</span>(irispca)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r">irispca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[, <span class="dv">-5</span>])
+<span class="kw">summary</span>(irispca)</code></pre>
 <pre><code>## Importance of components:
 ##                           PC1     PC2    PC3     PC4
 ## Standard deviation     2.0563 0.49262 0.2797 0.15439
 ## Proportion of Variance 0.9246 0.05307 0.0171 0.00521
 ## Cumulative Proportion  0.9246 0.97769 0.9948 1.00000</code></pre>
-<p>A summary of the <code>prcomp</code> output shows that along PC1 along, we are able to retain over 92% of the total variability in the data.</p>
+<p>A summary of the <code>prcomp</code> output shows that along PC1 along, we are
+able to retain over 92% of the total variability in the data.</p>
 <div class="figure"><span id="fig:histpc1"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/histpc1-1.png" alt="Iris data along PC1." width="672" />
 <p class="caption">
@@ -570,49 +667,87 @@ Figure 4.9: Iris data along PC1.
 </div>
 <div id="visualisation" class="section level3">
 <h3><span class="header-section-number">4.5.2</span> Visualisation</h3>
-<p>A <strong>biplot</strong> features all original points re-mapped (rotated) along the first two PCs as well as the original features as vectors along the same PCs. Feature vectors that are in the same direction in PC space are also correlated in the original data space.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">biplot</span>(irispca)</code></pre></div>
+<p>A <strong>biplot</strong> features all original points re-mapped (rotated) along the
+first two PCs as well as the original features as vectors along the
+same PCs. Feature vectors that are in the same direction in PC space
+are also correlated in the original data space.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">biplot</span>(irispca)</code></pre>
 <p><img src="IntroMachineLearningWithR_files/figure-html/irisbiplot-1.png" width="672" /></p>
-<p>One important piece of information when using PCA is the proportion of variance explained along the PCs, in particular when dealing with high dimensional data, as PC1 and PC2 (that are generally used for visualisation), might only account for an insufficient proportion of variance to be relevant on their own.</p>
-<p>In the code chunk below, I extract the standard deviations from the PCA result to calculate the variances, then obtain the percentage of and cumulative variance along the PCs.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">var &lt;-<span class="st"> </span>irispca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>
-(pve &lt;-<span class="st"> </span>var<span class="op">/</span><span class="kw">sum</span>(var))</code></pre></div>
+<p>One important piece of information when using PCA is the proportion of
+variance explained along the PCs, in particular when dealing with high
+dimensional data, as PC1 and PC2 (that are generally used for
+visualisation), might only account for an insufficient proportion of
+variance to be relevant on their own.</p>
+<p>In the code chunk below, I extract the standard deviations from the
+PCA result to calculate the variances, then obtain the percentage of
+and cumulative variance along the PCs.</p>
+<pre class="sourceCode r"><code class="sourceCode r">var &lt;-<span class="st"> </span>irispca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>
+(pve &lt;-<span class="st"> </span>var<span class="op">/</span><span class="kw">sum</span>(var))</code></pre>
 <pre><code>## [1] 0.924618723 0.053066483 0.017102610 0.005212184</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cumsum</span>(pve)</code></pre></div>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cumsum</span>(pve)</code></pre>
 <pre><code>## [1] 0.9246187 0.9776852 0.9947878 1.0000000</code></pre>
 <blockquote>
 <p>Challenge</p>
 <ul>
-<li>Repeat the PCA analysis on the iris dataset above, reproducing the biplot and preparing a barplot of the percentage of variance explained by each PC.</li>
-<li>It is often useful to produce custom figures using the data coordinates in PCA space, which can be accessed as <code>x</code> in the <code>prcomp</code> object. Reproduce the PCA plots below, along PC1 and PC2 and PC3 and PC4 respectively.</li>
+<li>Repeat the PCA analysis on the iris dataset above, reproducing the
+biplot and preparing a barplot of the percentage of variance
+explained by each PC.</li>
+<li>It is often useful to produce custom figures using the data
+coordinates in PCA space, which can be accessed as <code>x</code> in the
+<code>prcomp</code> object. Reproduce the PCA plots below, along PC1 and PC2
+and PC3 and PC4 respectively.</li>
 </ul>
 </blockquote>
 <p><img src="IntroMachineLearningWithR_files/figure-html/irispcax-1.png" width="1152" /></p>
-<p><details></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<details>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(irispca<span class="op">$</span>x[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">col =</span> iris<span class="op">$</span>Species)
-<span class="kw">plot</span>(irispca<span class="op">$</span>x[, <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">col =</span> iris<span class="op">$</span>Species)</code></pre></div>
-<p></details></p>
+<span class="kw">plot</span>(irispca<span class="op">$</span>x[, <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">col =</span> iris<span class="op">$</span>Species)</code></pre>
+</details>
 </div>
 <div id="data-pre-processing" class="section level3">
 <h3><span class="header-section-number">4.5.3</span> Data pre-processing</h3>
-<p>We haven’t looked at other <code>prcomp</code> parameters, other that the first one, <code>x</code>. There are two other ones that are or importance, in particular in the light of the section on pre-processing above, which are <code>center</code> and <code>scale.</code>. The former is set to <code>TRUE</code> by default, while the second one is set the <code>FALSE</code>.</p>
+<p>We haven’t looked at other <code>prcomp</code> parameters, other that the first
+one, <code>x</code>. There are two other ones that are or importance, in
+particular in the light of the section on pre-processing above, which
+are <code>center</code> and <code>scale.</code>. The former is set to <code>TRUE</code> by default,
+while the second one is set the <code>FALSE</code>.</p>
 <blockquote>
 <p>Challenge</p>
-<p>Repeat the analysis comparing the need for scaling on the <code>mtcars</code> dataset, but using PCA instead of hierarchical clustering. When comparing the two.</p>
+<p>Repeat the analysis comparing the need for scaling on the <code>mtcars</code>
+dataset, but using PCA instead of hierarchical clustering. When
+comparing the two.</p>
 </blockquote>
-<p><details></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">biplot</span>(<span class="kw">prcomp</span>(mtcars, <span class="dt">scale =</span> <span class="ot">FALSE</span>), <span class="dt">main =</span> <span class="st">&quot;No scaling&quot;</span>)  ## 1
-<span class="kw">biplot</span>(<span class="kw">prcomp</span>(mtcars, <span class="dt">scale =</span> <span class="ot">TRUE</span>), <span class="dt">main =</span> <span class="st">&quot;With scaling&quot;</span>) ## 2</code></pre></div>
+<details>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
+<span class="kw">biplot</span>(<span class="kw">prcomp</span>(mtcars, <span class="dt">scale =</span> <span class="ot">FALSE</span>), <span class="dt">main =</span> <span class="st">&quot;No scaling&quot;</span>)  <span class="co">## 1</span>
+<span class="kw">biplot</span>(<span class="kw">prcomp</span>(mtcars, <span class="dt">scale =</span> <span class="ot">TRUE</span>), <span class="dt">main =</span> <span class="st">&quot;With scaling&quot;</span>) <span class="co">## 2</span></code></pre>
 <p><img src="IntroMachineLearningWithR_files/figure-html/scalepcasol-1.png" width="672" /></p>
-<p>Without scaling, <code>disp</code> and <code>hp</code> are the features with the highest loadings along PC1 and 2 (all others are negligible), which are also those with the highest units of measurement. Scaling removes this effect. </details></p>
+Without scaling, <code>disp</code> and <code>hp</code> are the features with the highest
+loadings along PC1 and 2 (all others are negligible), which are also
+those with the highest units of measurement. Scaling removes this
+effect.
+</details>
 </div>
 <div id="final-comments-on-pca" class="section level3">
 <h3><span class="header-section-number">4.5.4</span> Final comments on PCA</h3>
-<p>Real datasets often come with <strong>missing values</strong>. In R, these should be encoded using <code>NA</code>. Unfortunately, PCA cannot deal with missing values, and observations containing <code>NA</code> values will be dropped automatically. This is a viable solution only when the proportion of missing values is low.</p>
-<p>It is also possible to impute missing values. This is described in greater details in the <em>Data pre-processing</em> section in the supervised machine learning chapter.</p>
-<p>Finally, we should be careful when using categorical data in any of the unsupervised methods described above. Categories are generally represented as factors, which are encoded as integer levels, and might give the impression that a distance between levels is a relevant measure (which it is not, unless the factors are ordered). In such situations, categorical data can be dropped, or it is possible to encode categories as binary <strong>dummy variables</strong>. For example, if we have 3 categories, say <code>A</code>, <code>B</code> and <code>C</code>, we would create two dummy variables to encode the categories as:</p>
+<p>Real datasets often come with <strong>missing values</strong>. In R, these should
+be encoded using <code>NA</code>. Unfortunately, PCA cannot deal with missing
+values, and observations containing <code>NA</code> values will be dropped
+automatically. This is a viable solution only when the proportion of
+missing values is low.</p>
+<p>It is also possible to impute missing values. This is described in
+greater details in the <em>Data pre-processing</em> section in the supervised
+machine learning chapter.</p>
+<p>Finally, we should be careful when using categorical data in any of
+the unsupervised methods described above. Categories are generally
+represented as factors, which are encoded as integer levels, and might
+give the impression that a distance between levels is a relevant
+measure (which it is not, unless the factors are ordered). In such
+situations, categorical data can be dropped, or it is possible to
+encode categories as binary <strong>dummy variables</strong>. For example, if we
+have 3 categories, say <code>A</code>, <code>B</code> and <code>C</code>, we would create two dummy
+variables to encode the categories as:</p>
 <table>
 <thead>
 <tr class="header">
@@ -639,32 +774,50 @@ Figure 4.9: Iris data along PC1.
 </tr>
 </tbody>
 </table>
-<p>so that the distance between each category are approximately equal to 1.</p>
+<p>so that the distance between each category are approximately equal to
+1.</p>
 </div>
 </div>
 <div id="t-distributed-stochastic-neighbour-embedding" class="section level2">
 <h2><span class="header-section-number">4.6</span> t-Distributed Stochastic Neighbour Embedding</h2>
-<p><a href="https://lvdmaaten.github.io/tsne/">t-Distributed Stochastic Neighbour Embedding</a> (t-SNE) is a <em>non-linear</em> dimensionality reduction technique, i.e. that different regions of the data space will be subjected to different transformations. t-SNE will compress small distances, thus bringing close neighbours together, and will ignore large distances. It is particularly well suited for <a href="https://distill.pub/2016/misread-tsne/">very high dimensional data</a>.</p>
-<p>In R, we can use the <code>Rtsne</code> function from the <em><a href="https://CRAN.R-project.org/package=Rtsne">Rtsne</a></em>. Before, we however need to remove any duplicated entries in the dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;Rtsne&quot;</span>)
+<p><a href="https://lvdmaaten.github.io/tsne/">t-Distributed Stochastic Neighbour Embedding</a> (t-SNE)
+is a <em>non-linear</em> dimensionality reduction technique, i.e. that
+different regions of the data space will be subjected to different
+transformations. t-SNE will compress small distances, thus bringing
+close neighbours together, and will ignore large distances. It is
+particularly well suited
+for
+<a href="https://distill.pub/2016/misread-tsne/">very high dimensional data</a>.</p>
+<p>In R, we can use the <code>Rtsne</code> function from the <em><a href="https://CRAN.R-project.org/package=Rtsne">Rtsne</a></em>.
+Before, we however need to remove any duplicated entries in the
+dataset.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;Rtsne&quot;</span>)
 uiris &lt;-<span class="st"> </span><span class="kw">unique</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])
 iristsne &lt;-<span class="st"> </span><span class="kw">Rtsne</span>(uiris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])
-<span class="kw">plot</span>(iristsne<span class="op">$</span>Y, <span class="dt">col =</span> uiris<span class="op">$</span>Species)</code></pre></div>
+<span class="kw">plot</span>(iristsne<span class="op">$</span>Y, <span class="dt">col =</span> uiris<span class="op">$</span>Species)</code></pre>
 <p><img src="IntroMachineLearningWithR_files/figure-html/iristsne-1.png" width="672" /></p>
-<p>As with PCA, the data can be scaled and centred prior the running t-SNE (see the <code>pca_center</code> and <code>pca_scale</code> arguments). The algorithm is stochastic, and will produce different results at each repetition.</p>
+<p>As with PCA, the data can be scaled and centred prior the running
+t-SNE (see the <code>pca_center</code> and <code>pca_scale</code> arguments). The algorithm
+is stochastic, and will produce different results at each repetition.</p>
 <div id="parameter-tuning" class="section level3">
 <h3><span class="header-section-number">4.6.1</span> Parameter tuning</h3>
-<p>t-SNE (as well as many other methods, in particular classification algorithms) has two important parameters that can substantially influence the clustering of the data</p>
+<p>t-SNE (as well as many other methods, in particular classification
+algorithms) has two important parameters that can substantially
+influence the clustering of the data</p>
 <ul>
 <li><strong>Perplexity</strong>: balances global and local aspects of the data.</li>
-<li><strong>Iterations</strong>: number of iterations before the clustering is stopped.</li>
+<li><strong>Iterations</strong>: number of iterations before the clustering is
+stopped.</li>
 </ul>
-<p>It is important to adapt these for different data. The figure below shows a 5032 by 20 dataset that represent protein sub-cellular localisation.</p>
+<p>It is important to adapt these for different data. The figure below
+shows a 5032 by 20 dataset that represent protein sub-cellular
+localisation.</p>
 <div class="figure">
 <img src="https://raw.githubusercontent.com/lgatto/visualisation/master/figure/tsnesplots-1.png" alt="Effect of different perplexity and iterations when running t-SNE" />
 <p class="caption">Effect of different perplexity and iterations when running t-SNE</p>
 </div>
-<p>As a comparison, below are the same data with PCA (left) and t-SNE (right).</p>
+<p>As a comparison, below are the same data with PCA (left) and t-SNE
+(right).</p>
 <div class="figure">
 <img src="https://raw.githubusercontent.com/lgatto/visualisation/master/figure/tsneex-1.png" alt="PCA and t-SNE on hyperLOPIT" />
 <p class="caption">PCA and t-SNE on hyperLOPIT</p>
@@ -697,10 +850,11 @@ gitbook.start({
 "facebook": true,
 "twitter": true,
 "google": false,
+"linkedin": false,
 "weibo": false,
-"instapper": false,
+"instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -708,6 +862,10 @@ gitbook.start({
 "size": 2
 },
 "edit": {
+"link": null,
+"text": null
+},
+"history": {
 "link": null,
 "text": null
 },
@@ -724,9 +882,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
