@@ -142,10 +142,10 @@ of customer attrition.
 In R:
 
 ```{r}
-library("C50")
-data(churn)
-dim(churnTrain)
-dim(churnTest)
+library("modeldata")
+data(mlc_churn, package = "modeldata")
+churnTrain <- mlc_churn[1:3333, ]
+churnTest <- mlc_churn[3334:5000, ]
 ```
 
 
