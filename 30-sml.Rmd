@@ -335,7 +335,7 @@ model <- train(medv ~ .,
                                         number = 10))
 model
 p <- predict(model, Boston)
-sqrt(mean(p - Boston$medv)^2)
+sqrt(mean((p - Boston$medv)^2))
 ```
 </details>
 
