@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Unsupervised Learning | An Introduction to Machine Learning with R</title>
-  <meta name="description" content="An hands-on introduction to machine learning with R.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="An hands-on introduction to machine learning with R." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Unsupervised Learning | An Introduction to Machine Learning with R" />
   <meta property="og:type" content="book" />
@@ -22,18 +21,18 @@
   <meta name="twitter:description" content="An hands-on introduction to machine learning with R." />
   
 
-<meta name="author" content="Laurent Gatto">
+<meta name="author" content="Laurent Gatto" />
 
 
-<meta name="date" content="2019-04-24">
+<meta name="date" content="2020-02-28" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="example-datasets.html">
-<link rel="next" href="supervised-learning.html">
+<link rel="prev" href="example-datasets.html"/>
+<link rel="next" href="supervised-learning.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -41,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,12 +48,14 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.5/datatables.js"></script>
-<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.12/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 
@@ -64,7 +66,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -76,7 +77,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(title);
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -271,7 +272,7 @@ data.</li>
 observations into a fixed number of <em>k</em> clusters. The algorithm will
 find homogeneous clusters.</p>
 <p>In R, we use</p>
-<pre class="sourceCode r"><code class="sourceCode r">stats<span class="op">::</span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">stats<span class="op">::</span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p>where</p>
 <ul>
 <li><code>x</code> is a numeric data matrix</li>
@@ -309,17 +310,17 @@ Figure 4.1: k-means algorithm on sepal and petal lengths
 </p>
 </div>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">i &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;Length&quot;</span>, <span class="kw">names</span>(iris))
-x &lt;-<span class="st"> </span>iris[, i]
-cl &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
-<span class="kw">plot</span>(x, <span class="dt">col =</span> cl<span class="op">$</span>cluster)</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">i &lt;-<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;Length&quot;</span>, <span class="kw">names</span>(iris))</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">x &lt;-<span class="st"> </span>iris[, i]</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3">cl &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="kw">plot</span>(x, <span class="dt">col =</span> cl<span class="op">$</span>cluster)</a></code></pre></div>
 </details>
 <div id="how-does-k-means-work" class="section level3">
 <h3><span class="header-section-number">4.2.1</span> How does k-means work</h3>
 <p><strong>Initialisation</strong>: randomly assign class membership</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12</span>)
-init &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">3</span>, <span class="kw">nrow</span>(x), <span class="dt">replace =</span> <span class="ot">TRUE</span>)
-<span class="kw">plot</span>(x, <span class="dt">col =</span> init)</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">init &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">3</span>, <span class="kw">nrow</span>(x), <span class="dt">replace =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="kw">plot</span>(x, <span class="dt">col =</span> init)</a></code></pre></div>
 <div class="figure"><span id="fig:kmworksinit"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/kmworksinit-1.png" alt="k-means random intialisation" width="672" />
 <p class="caption">
@@ -335,20 +336,20 @@ centre.</li>
 </ol>
 <p>It’s also possible to stop the algorithm after a certain number of
 iterations, or once the centres move less than a certain distance.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">plot</span>(x, <span class="dt">col =</span> init)
-centres &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) <span class="kw">colMeans</span>(x[init <span class="op">==</span><span class="st"> </span>i, ], ))
-centres &lt;-<span class="st"> </span><span class="kw">t</span>(centres)
-<span class="kw">points</span>(centres[, <span class="dv">1</span>], centres[, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)
-
-tmp &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">rbind</span>(centres, x))
-tmp &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tmp)[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]
-
-ki &lt;-<span class="st"> </span><span class="kw">apply</span>(tmp, <span class="dv">1</span>, which.min)
-ki &lt;-<span class="st"> </span>ki[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)]
-
-<span class="kw">plot</span>(x, <span class="dt">col =</span> ki)
-<span class="kw">points</span>(centres[, <span class="dv">1</span>], centres[, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">plot</span>(x, <span class="dt">col =</span> init)</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">centres &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="cf">function</span>(i) <span class="kw">colMeans</span>(x[init <span class="op">==</span><span class="st"> </span>i, ], ))</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">centres &lt;-<span class="st"> </span><span class="kw">t</span>(centres)</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="kw">points</span>(centres[, <span class="dv">1</span>], centres[, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb18-7" data-line-number="7">tmp &lt;-<span class="st"> </span><span class="kw">dist</span>(<span class="kw">rbind</span>(centres, x))</a>
+<a class="sourceLine" id="cb18-8" data-line-number="8">tmp &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(tmp)[, <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb18-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb18-10" data-line-number="10">ki &lt;-<span class="st"> </span><span class="kw">apply</span>(tmp, <span class="dv">1</span>, which.min)</a>
+<a class="sourceLine" id="cb18-11" data-line-number="11">ki &lt;-<span class="st"> </span>ki[<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)]</a>
+<a class="sourceLine" id="cb18-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="kw">plot</span>(x, <span class="dt">col =</span> ki)</a>
+<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="kw">points</span>(centres[, <span class="dv">1</span>], centres[, <span class="dv">2</span>], <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:kmworksiter"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/kmworksiter-1.png" alt="k-means iteration: calculate centers (left) and assign new cluster membership (right)" width="1152" />
 <p class="caption">
@@ -384,36 +385,36 @@ the same results. Try the same with random data of identical
 dimensions.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
-cl2 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
-<span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">cl2 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</a></code></pre></div>
 <pre><code>##    
 ##      1  2  3
 ##   1  0 41  0
 ##   2 51  0  0
 ##   3  0  0 58</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)
-cl2 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)
-<span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">cl2 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</a></code></pre></div>
 <pre><code>##    
 ##      1  2  3
 ##   1 41  0  0
 ##   2  0  0 58
 ##   3  0 51  0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-xr &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="kw">prod</span>(<span class="kw">dim</span>(x))), <span class="dt">ncol =</span> <span class="kw">ncol</span>(x))
-cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(xr, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)
-cl2 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(xr, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)
-<span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">xr &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="kw">prod</span>(<span class="kw">dim</span>(x))), <span class="dt">ncol =</span> <span class="kw">ncol</span>(x))</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">cl1 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(xr, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">cl2 &lt;-<span class="st"> </span><span class="kw">kmeans</span>(xr, <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw">table</span>(cl1<span class="op">$</span>cluster, cl2<span class="op">$</span>cluster)</a></code></pre></div>
 <pre><code>##    
 ##      1  2  3
 ##   1  0 52  0
 ##   2  0  0 46
 ##   3 52  0  0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">diffres &lt;-<span class="st"> </span>cl1<span class="op">$</span>cluster <span class="op">!=</span><span class="st"> </span>cl2<span class="op">$</span>cluster
-<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">plot</span>(xr, <span class="dt">col =</span> cl1<span class="op">$</span>cluster, <span class="dt">pch =</span> <span class="kw">ifelse</span>(diffres, <span class="dv">19</span>, <span class="dv">1</span>))
-<span class="kw">plot</span>(xr, <span class="dt">col =</span> cl2<span class="op">$</span>cluster, <span class="dt">pch =</span> <span class="kw">ifelse</span>(diffres, <span class="dv">19</span>, <span class="dv">1</span>))</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">diffres &lt;-<span class="st"> </span>cl1<span class="op">$</span>cluster <span class="op">!=</span><span class="st"> </span>cl2<span class="op">$</span>cluster</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="kw">plot</span>(xr, <span class="dt">col =</span> cl1<span class="op">$</span>cluster, <span class="dt">pch =</span> <span class="kw">ifelse</span>(diffres, <span class="dv">19</span>, <span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"><span class="kw">plot</span>(xr, <span class="dt">col =</span> cl2<span class="op">$</span>cluster, <span class="dt">pch =</span> <span class="kw">ifelse</span>(diffres, <span class="dv">19</span>, <span class="dv">1</span>))</a></code></pre></div>
 <div class="figure"><span id="fig:selrep"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/selrep-1.png" alt="Different k-means results on the same (random) data" width="1152" />
 <p class="caption">
@@ -436,12 +437,12 @@ Figure 4.4: Different k-means results on the same (random) data
 <code>x</code> test data, and reproduce the figure above.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">ks &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span>
-tot_within_ss &lt;-<span class="st"> </span><span class="kw">sapply</span>(ks, <span class="cf">function</span>(k) {
-    cl &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, k, <span class="dt">nstart =</span> <span class="dv">10</span>)
-    cl<span class="op">$</span>tot.withinss
-})
-<span class="kw">plot</span>(ks, tot_within_ss, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">ks &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">5</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2">tot_within_ss &lt;-<span class="st"> </span><span class="kw">sapply</span>(ks, <span class="cf">function</span>(k) {</a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">    cl &lt;-<span class="st"> </span><span class="kw">kmeans</span>(x, k, <span class="dt">nstart =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb26-4" data-line-number="4">    cl<span class="op">$</span>tot.withinss</a>
+<a class="sourceLine" id="cb26-5" data-line-number="5">})</a>
+<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="kw">plot</span>(ks, tot_within_ss, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</a></code></pre></div>
 <img src="IntroMachineLearningWithR_files/figure-html/solkmelbow-1.png" width="672" />
 </details>
 </div>
@@ -486,9 +487,9 @@ distance.</li>
 dendrogram using the dedicated <code>plot</code> method.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">d &lt;-<span class="st"> </span><span class="kw">dist</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])
-hcl &lt;-<span class="st"> </span><span class="kw">hclust</span>(d)
-hcl</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">d &lt;-<span class="st"> </span><span class="kw">dist</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">hcl &lt;-<span class="st"> </span><span class="kw">hclust</span>(d)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">hcl</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## hclust(d = d)
@@ -496,7 +497,7 @@ hcl</code></pre>
 ## Cluster method   : complete 
 ## Distance         : euclidean 
 ## Number of objects: 150</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hcl)</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">plot</span>(hcl)</a></code></pre></div>
 <img src="IntroMachineLearningWithR_files/figure-html/hclsol-1.png" width="672" />
 </details>
 </div>
@@ -528,20 +529,22 @@ the same results.</li>
 </ul>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hcl)
-<span class="kw">abline</span>(<span class="dt">h =</span> <span class="fl">3.9</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">plot</span>(hcl)</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="fl">3.9</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/cuthclsol-1.png" width="672" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>)</code></pre>
-<pre><code>##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 3 2 3 2 3 2 3 3 3 3 2 3 2 3 3 2 3
-##  [71] 2 3 2 2 2 2 2 2 2 3 3 3 3 2 3 2 2 2 3 3 3 2 3 3 3 3 3 2 3 3
-##  [ reached getOption(&quot;max.print&quot;) -- omitted 50 entries ]</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cutree</span>(hcl, <span class="dt">h =</span> <span class="fl">3.9</span>)</code></pre>
-<pre><code>##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-##  [36] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 3 2 3 2 3 2 3 3 3 3 2 3 2 3 3 2 3
-##  [71] 2 3 2 2 2 2 2 2 2 3 3 3 3 2 3 2 2 2 3 3 3 2 3 3 3 3 3 2 3 3
-##  [ reached getOption(&quot;max.print&quot;) -- omitted 50 entries ]</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">identical</span>(<span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>), <span class="kw">cutree</span>(hcl, <span class="dt">h =</span> <span class="fl">3.9</span>))</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>)</a></code></pre></div>
+<pre><code>##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 3 2 3 2 3 2 3 3 3 3 2 3 2 3 3 2 3 2 3 2 2
+##  [75] 2 2 2 2 2 3 3 3 3 2 3 2 2 2 3 3 3 2 3 3 3 3 3 2 3 3 2 2 2 2 2 2 3 2 2 2 2
+## [112] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## [149] 2 2</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">cutree</span>(hcl, <span class="dt">h =</span> <span class="fl">3.9</span>)</a></code></pre></div>
+<pre><code>##   [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [38] 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 3 2 3 2 3 2 3 3 3 3 2 3 2 3 3 2 3 2 3 2 2
+##  [75] 2 2 2 2 2 3 3 3 3 2 3 2 2 2 3 3 3 2 3 3 3 3 3 2 3 3 2 2 2 2 2 2 3 2 2 2 2
+## [112] 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## [149] 2 2</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">identical</span>(<span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>), <span class="kw">cutree</span>(hcl, <span class="dt">h =</span> <span class="fl">3.9</span>))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 </details>
 <blockquote>
@@ -551,26 +554,26 @@ clustering produce the same results on the <code>iris</code> data.</p>
 <p>Which one, if any, is correct?</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">km &lt;-<span class="st"> </span><span class="kw">kmeans</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)
-hcl &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))
-<span class="kw">table</span>(km<span class="op">$</span>cluster, <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>))</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">km &lt;-<span class="st"> </span><span class="kw">kmeans</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">centers =</span> <span class="dv">3</span>, <span class="dt">nstart =</span> <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2">hcl &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]))</a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="kw">table</span>(km<span class="op">$</span>cluster, <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>))</a></code></pre></div>
 <pre><code>##    
 ##      1  2  3
 ##   1  0 34 28
 ##   2  0 38  0
 ##   3 50  0  0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length, <span class="dt">col =</span> km<span class="op">$</span>cluster, <span class="dt">main =</span> <span class="st">&quot;k-means&quot;</span>)
-<span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length, <span class="dt">col =</span> <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>), <span class="dt">main =</span> <span class="st">&quot;Hierarchical clustering&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length, <span class="dt">col =</span> km<span class="op">$</span>cluster, <span class="dt">main =</span> <span class="st">&quot;k-means&quot;</span>)</a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="kw">plot</span>(iris<span class="op">$</span>Petal.Length, iris<span class="op">$</span>Sepal.Length, <span class="dt">col =</span> <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>), <span class="dt">main =</span> <span class="st">&quot;Hierarchical clustering&quot;</span>)</a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/iris2algs-1.png" width="1152" /></p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## Checking with the labels provided with the iris data</span>
-<span class="kw">table</span>(iris<span class="op">$</span>Species, km<span class="op">$</span>cluster)</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="co">## Checking with the labels provided with the iris data</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="kw">table</span>(iris<span class="op">$</span>Species, km<span class="op">$</span>cluster)</a></code></pre></div>
 <pre><code>##             
 ##               1  2  3
 ##   setosa      0  0 50
 ##   versicolor 48  2  0
 ##   virginica  14 36  0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(iris<span class="op">$</span>Species, <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>))</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">table</span>(iris<span class="op">$</span>Species, <span class="kw">cutree</span>(hcl, <span class="dt">k =</span> <span class="dv">3</span>))</a></code></pre></div>
 <pre><code>##             
 ##               1  2  3
 ##   setosa     50  0  0
@@ -596,16 +599,16 @@ different scales, compare the hierarchical clusters obtained on the
 original and scaled data.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">colMeans</span>(mtcars)</code></pre>
-<pre><code>##        mpg        cyl       disp         hp       drat         wt 
-##  20.090625   6.187500 230.721875 146.687500   3.596563   3.217250 
-##       qsec         vs         am       gear       carb 
-##  17.848750   0.437500   0.406250   3.687500   2.812500</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">hcl1 &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(mtcars))
-hcl2 &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(<span class="kw">scale</span>(mtcars)))
-<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">plot</span>(hcl1, <span class="dt">main =</span> <span class="st">&quot;original data&quot;</span>)
-<span class="kw">plot</span>(hcl2, <span class="dt">main =</span> <span class="st">&quot;scaled data&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">colMeans</span>(mtcars)</a></code></pre></div>
+<pre><code>##        mpg        cyl       disp         hp       drat         wt       qsec 
+##  20.090625   6.187500 230.721875 146.687500   3.596563   3.217250  17.848750 
+##         vs         am       gear       carb 
+##   0.437500   0.406250   3.687500   2.812500</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">hcl1 &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(mtcars))</a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">hcl2 &lt;-<span class="st"> </span><span class="kw">hclust</span>(<span class="kw">dist</span>(<span class="kw">scale</span>(mtcars)))</a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb46-4" data-line-number="4"><span class="kw">plot</span>(hcl1, <span class="dt">main =</span> <span class="st">&quot;original data&quot;</span>)</a>
+<a class="sourceLine" id="cb46-5" data-line-number="5"><span class="kw">plot</span>(hcl2, <span class="dt">main =</span> <span class="st">&quot;scaled data&quot;</span>)</a></code></pre></div>
 <img src="IntroMachineLearningWithR_files/figure-html/scalesol-1.png" width="1152" />
 </details>
 </div>
@@ -646,11 +649,11 @@ Figure 4.8: Original data (left). PC1 will maximise the variability while minimi
 <p>Let’s explore PCA on the <code>iris</code> data. While it contains only 4
 variables, is already becomes difficult to visualise the 3 groups
 along all these dimensions.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairs</span>(iris[, <span class="dv">-5</span>], <span class="dt">col =</span> iris[, <span class="dv">5</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw">pairs</span>(iris[, <span class="dv">-5</span>], <span class="dt">col =</span> iris[, <span class="dv">5</span>], <span class="dt">pch =</span> <span class="dv">19</span>)</a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/irispairs-1.png" width="672" /></p>
 <p>Let’s use PCA to reduce the dimension.</p>
-<pre class="sourceCode r"><code class="sourceCode r">irispca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[, <span class="dv">-5</span>])
-<span class="kw">summary</span>(irispca)</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">irispca &lt;-<span class="st"> </span><span class="kw">prcomp</span>(iris[, <span class="dv">-5</span>])</a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="kw">summary</span>(irispca)</a></code></pre></div>
 <pre><code>## Importance of components:
 ##                           PC1     PC2    PC3     PC4
 ## Standard deviation     2.0563 0.49262 0.2797 0.15439
@@ -671,7 +674,7 @@ Figure 4.9: Iris data along PC1.
 first two PCs as well as the original features as vectors along the
 same PCs. Feature vectors that are in the same direction in PC space
 are also correlated in the original data space.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">biplot</span>(irispca)</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">biplot</span>(irispca)</a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/irisbiplot-1.png" width="672" /></p>
 <p>One important piece of information when using PCA is the proportion of
 variance explained along the PCs, in particular when dealing with high
@@ -681,10 +684,10 @@ variance to be relevant on their own.</p>
 <p>In the code chunk below, I extract the standard deviations from the
 PCA result to calculate the variances, then obtain the percentage of
 and cumulative variance along the PCs.</p>
-<pre class="sourceCode r"><code class="sourceCode r">var &lt;-<span class="st"> </span>irispca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span>
-(pve &lt;-<span class="st"> </span>var<span class="op">/</span><span class="kw">sum</span>(var))</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">var &lt;-<span class="st"> </span>irispca<span class="op">$</span>sdev<span class="op">^</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2">(pve &lt;-<span class="st"> </span>var<span class="op">/</span><span class="kw">sum</span>(var))</a></code></pre></div>
 <pre><code>## [1] 0.924618723 0.053066483 0.017102610 0.005212184</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">cumsum</span>(pve)</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">cumsum</span>(pve)</a></code></pre></div>
 <pre><code>## [1] 0.9246187 0.9776852 0.9947878 1.0000000</code></pre>
 <blockquote>
 <p>Challenge</p>
@@ -700,9 +703,9 @@ and PC3 and PC4 respectively.</li>
 </blockquote>
 <p><img src="IntroMachineLearningWithR_files/figure-html/irispcax-1.png" width="1152" /></p>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">plot</span>(irispca<span class="op">$</span>x[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">col =</span> iris<span class="op">$</span>Species)
-<span class="kw">plot</span>(irispca<span class="op">$</span>x[, <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">col =</span> iris<span class="op">$</span>Species)</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="kw">plot</span>(irispca<span class="op">$</span>x[, <span class="dv">1</span><span class="op">:</span><span class="dv">2</span>], <span class="dt">col =</span> iris<span class="op">$</span>Species)</a>
+<a class="sourceLine" id="cb55-3" data-line-number="3"><span class="kw">plot</span>(irispca<span class="op">$</span>x[, <span class="dv">3</span><span class="op">:</span><span class="dv">4</span>], <span class="dt">col =</span> iris<span class="op">$</span>Species)</a></code></pre></div>
 </details>
 </div>
 <div id="data-pre-processing" class="section level3">
@@ -719,9 +722,9 @@ dataset, but using PCA instead of hierarchical clustering. When
 comparing the two.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
-<span class="kw">biplot</span>(<span class="kw">prcomp</span>(mtcars, <span class="dt">scale =</span> <span class="ot">FALSE</span>), <span class="dt">main =</span> <span class="st">&quot;No scaling&quot;</span>)  <span class="co">## 1</span>
-<span class="kw">biplot</span>(<span class="kw">prcomp</span>(mtcars, <span class="dt">scale =</span> <span class="ot">TRUE</span>), <span class="dt">main =</span> <span class="st">&quot;With scaling&quot;</span>) <span class="co">## 2</span></code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="kw">biplot</span>(<span class="kw">prcomp</span>(mtcars, <span class="dt">scale =</span> <span class="ot">FALSE</span>), <span class="dt">main =</span> <span class="st">&quot;No scaling&quot;</span>)  <span class="co">## 1</span></a>
+<a class="sourceLine" id="cb56-3" data-line-number="3"><span class="kw">biplot</span>(<span class="kw">prcomp</span>(mtcars, <span class="dt">scale =</span> <span class="ot">TRUE</span>), <span class="dt">main =</span> <span class="st">&quot;With scaling&quot;</span>) <span class="co">## 2</span></a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/scalepcasol-1.png" width="672" /></p>
 Without scaling, <code>disp</code> and <code>hp</code> are the features with the highest
 loadings along PC1 and 2 (all others are negligible), which are also
@@ -791,10 +794,10 @@ for
 <p>In R, we can use the <code>Rtsne</code> function from the <em><a href="https://CRAN.R-project.org/package=Rtsne">Rtsne</a></em>.
 Before, we however need to remove any duplicated entries in the
 dataset.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;Rtsne&quot;</span>)
-uiris &lt;-<span class="st"> </span><span class="kw">unique</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])
-iristsne &lt;-<span class="st"> </span><span class="kw">Rtsne</span>(uiris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])
-<span class="kw">plot</span>(iristsne<span class="op">$</span>Y, <span class="dt">col =</span> uiris<span class="op">$</span>Species)</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;Rtsne&quot;</span>)</a>
+<a class="sourceLine" id="cb57-2" data-line-number="2">uiris &lt;-<span class="st"> </span><span class="kw">unique</span>(iris[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>])</a>
+<a class="sourceLine" id="cb57-3" data-line-number="3">iristsne &lt;-<span class="st"> </span><span class="kw">Rtsne</span>(uiris[, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb57-4" data-line-number="4"><span class="kw">plot</span>(iristsne<span class="op">$</span>Y, <span class="dt">col =</span> uiris<span class="op">$</span>Species)</a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/iristsne-1.png" width="672" /></p>
 <p>As with PCA, the data can be scaled and centred prior the running
 t-SNE (see the <code>pca_center</code> and <code>pca_scale</code> arguments). The algorithm
@@ -837,11 +840,13 @@ localisation.</p>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -849,12 +854,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -866,6 +870,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -884,8 +892,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

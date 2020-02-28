@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Supervised Learning | An Introduction to Machine Learning with R</title>
-  <meta name="description" content="An hands-on introduction to machine learning with R.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="An hands-on introduction to machine learning with R." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Supervised Learning | An Introduction to Machine Learning with R" />
   <meta property="og:type" content="book" />
@@ -22,18 +21,18 @@
   <meta name="twitter:description" content="An hands-on introduction to machine learning with R." />
   
 
-<meta name="author" content="Laurent Gatto">
+<meta name="author" content="Laurent Gatto" />
 
 
-<meta name="date" content="2019-04-24">
+<meta name="date" content="2020-02-28" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="unsupervised-learning.html">
-<link rel="next" href="final-notes.html">
+<link rel="prev" href="unsupervised-learning.html"/>
+<link rel="next" href="final-notes.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -41,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,12 +48,14 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.5/datatables.js"></script>
-<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.12/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 
@@ -64,7 +66,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -76,7 +77,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(title);
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -286,29 +287,29 @@ predict the species of another set of 50 randomly chosen flowers. The
 <code>knn</code> function takes the training data, the new data (to be inferred)
 and the labels of the training data, and returns (by default) the
 predicted class.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(12L)
-tr &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">150</span>, <span class="dv">50</span>)
-nw &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">150</span>, <span class="dv">50</span>)
-<span class="kw">library</span>(<span class="st">&quot;class&quot;</span>)
-knnres &lt;-<span class="st"> </span><span class="kw">knn</span>(iris[tr, <span class="dv">-5</span>], iris[nw, <span class="dv">-5</span>], iris<span class="op">$</span>Species[tr])
-<span class="kw">head</span>(knnres)</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">set.seed</span>(12L)</a>
+<a class="sourceLine" id="cb58-2" data-line-number="2">tr &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">150</span>, <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb58-3" data-line-number="3">nw &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">150</span>, <span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb58-4" data-line-number="4"><span class="kw">library</span>(<span class="st">&quot;class&quot;</span>)</a>
+<a class="sourceLine" id="cb58-5" data-line-number="5">knnres &lt;-<span class="st"> </span><span class="kw">knn</span>(iris[tr, <span class="dv">-5</span>], iris[nw, <span class="dv">-5</span>], iris<span class="op">$</span>Species[tr])</a>
+<a class="sourceLine" id="cb58-6" data-line-number="6"><span class="kw">head</span>(knnres)</a></code></pre></div>
 <pre><code>## [1] versicolor setosa     versicolor setosa     setosa     setosa    
 ## Levels: setosa versicolor virginica</code></pre>
 <p>We can now compare the observed kNN-predicted class and the expected
 known outcome and calculate the overall accuracy of our model.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(knnres, iris<span class="op">$</span>Species[nw])</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw">table</span>(knnres, iris<span class="op">$</span>Species[nw])</a></code></pre></div>
 <pre><code>##             
 ## knnres       setosa versicolor virginica
 ##   setosa         20          0         0
 ##   versicolor      0         17         2
 ##   virginica       0          0        11</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(knnres <span class="op">==</span><span class="st"> </span>iris<span class="op">$</span>Species[nw])</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw">mean</span>(knnres <span class="op">==</span><span class="st"> </span>iris<span class="op">$</span>Species[nw])</a></code></pre></div>
 <pre><code>## [1] 0.96</code></pre>
 <p>We have omitted an important argument from <code>knn</code>, which is the
 parameter <em>k</em> of the classifier. This parameter defines how many
 nearest neighbours will be considered to assign a class to a new
 unlabelled observation. From the arguments of the function,</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">args</span>(knn)</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">args</span>(knn)</a></code></pre></div>
 <pre><code>## function (train, test, cl, k = 1, l = 0, prob = FALSE, use.all = TRUE) 
 ## NULL</code></pre>
 <p>we see that the default value is 1. But is this a good value? Wouldn’t
@@ -322,10 +323,10 @@ to use the same <code>tr</code> and <code>nw</code> training and new data to avo
 biases in the comparison.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">knnres5 &lt;-<span class="st"> </span><span class="kw">knn</span>(iris[tr, <span class="dv">-5</span>], iris[nw, <span class="dv">-5</span>], iris<span class="op">$</span>Species[tr], <span class="dt">k =</span> <span class="dv">5</span>)
-<span class="kw">mean</span>(knnres5 <span class="op">==</span><span class="st"> </span>iris<span class="op">$</span>Species[nw])</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1">knnres5 &lt;-<span class="st"> </span><span class="kw">knn</span>(iris[tr, <span class="dv">-5</span>], iris[nw, <span class="dv">-5</span>], iris<span class="op">$</span>Species[tr], <span class="dt">k =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb66-2" data-line-number="2"><span class="kw">mean</span>(knnres5 <span class="op">==</span><span class="st"> </span>iris<span class="op">$</span>Species[nw])</a></code></pre></div>
 <pre><code>## [1] 0.94</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">table</span>(knnres5, knnres)</code></pre>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">table</span>(knnres5, knnres)</a></code></pre></div>
 <pre><code>##             knnres
 ## knnres5      setosa versicolor virginica
 ##   setosa         20          0         0
@@ -337,8 +338,8 @@ biases in the comparison.</p>
 <p>Rerun the kNN classifier with a value of <em>k</em> &gt; 1, and specify <code>prob = TRUE</code> to obtain the proportion of the votes for the winning class.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">knnres5prob &lt;-<span class="st"> </span><span class="kw">knn</span>(iris[tr, <span class="dv">-5</span>], iris[nw, <span class="dv">-5</span>], iris<span class="op">$</span>Species[tr], <span class="dt">k =</span> <span class="dv">5</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)
-<span class="kw">table</span>(<span class="kw">attr</span>(knnres5prob, <span class="st">&quot;prob&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1">knnres5prob &lt;-<span class="st"> </span><span class="kw">knn</span>(iris[tr, <span class="dv">-5</span>], iris[nw, <span class="dv">-5</span>], iris<span class="op">$</span>Species[tr], <span class="dt">k =</span> <span class="dv">5</span>, <span class="dt">prob =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb70-2" data-line-number="2"><span class="kw">table</span>(<span class="kw">attr</span>(knnres5prob, <span class="st">&quot;prob&quot;</span>))</a></code></pre></div>
 <pre><code>## 
 ##               0.6               0.8 0.833333333333333                 1 
 ##                 3                13                 1                33</code></pre>
@@ -376,22 +377,22 @@ Classification And REgression Training (see also
 <a href="https://topepo.github.io/caret/index.html" class="uri">https://topepo.github.io/caret/index.html</a>). It provides a common and
 consistent interface to many, often repetitive, tasks in supervised
 learning.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;caret&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;caret&quot;</span>)</a></code></pre></div>
 <p>The code chunk below uses the <code>lm</code> function to model the price of
 round cut diamonds and then predicts the price of these very same
 diamonds with the <code>predict</code> function.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(diamonds)
-model &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>., diamonds)
-p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, diamonds)</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw">data</span>(diamonds)</a>
+<a class="sourceLine" id="cb73-2" data-line-number="2">model &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>., diamonds)</a>
+<a class="sourceLine" id="cb73-3" data-line-number="3">p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, diamonds)</a></code></pre></div>
 <blockquote>
 <p>Challenge</p>
 <p>Calculate the root mean squared error for the prediction above</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## Error on prediction</span>
-error &lt;-<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>diamonds<span class="op">$</span>price
-rmse_in &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(error<span class="op">^</span><span class="dv">2</span>)) <span class="co">## in-sample RMSE</span>
-rmse_in</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="co">## Error on prediction</span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2">error &lt;-<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>diamonds<span class="op">$</span>price</a>
+<a class="sourceLine" id="cb74-3" data-line-number="3">rmse_in &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(error<span class="op">^</span><span class="dv">2</span>)) <span class="co">## in-sample RMSE</span></a>
+<a class="sourceLine" id="cb74-4" data-line-number="4">rmse_in</a></code></pre></div>
 <pre><code>## [1] 1129.843</code></pre>
 </details>
 <p>Let’s now repeat the exercise above, but by calculating the
@@ -410,14 +411,14 @@ train subsets.</li>
 </ol>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-ntest &lt;-<span class="st"> </span><span class="kw">nrow</span>(diamonds) <span class="op">*</span><span class="st"> </span><span class="fl">0.80</span>
-test &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(diamonds), ntest)
-model &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> diamonds[test, ])
-p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, diamonds[<span class="op">-</span>test, ])
-error &lt;-<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>diamonds<span class="op">$</span>price[<span class="op">-</span>test]
-rmse_out &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(error<span class="op">^</span><span class="dv">2</span>)) <span class="co">## out-of-sample RMSE</span>
-rmse_out</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb76-2" data-line-number="2">ntest &lt;-<span class="st"> </span><span class="kw">nrow</span>(diamonds) <span class="op">*</span><span class="st"> </span><span class="fl">0.80</span></a>
+<a class="sourceLine" id="cb76-3" data-line-number="3">test &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(diamonds), ntest)</a>
+<a class="sourceLine" id="cb76-4" data-line-number="4">model &lt;-<span class="st"> </span><span class="kw">lm</span>(price <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> diamonds[test, ])</a>
+<a class="sourceLine" id="cb76-5" data-line-number="5">p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, diamonds[<span class="op">-</span>test, ])</a>
+<a class="sourceLine" id="cb76-6" data-line-number="6">error &lt;-<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>diamonds<span class="op">$</span>price[<span class="op">-</span>test]</a>
+<a class="sourceLine" id="cb76-7" data-line-number="7">rmse_out &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(error<span class="op">^</span><span class="dv">2</span>)) <span class="co">## out-of-sample RMSE</span></a>
+<a class="sourceLine" id="cb76-8" data-line-number="8">rmse_out</a></code></pre></div>
 <pre><code>## [1] 1137.466</code></pre>
 </details>
 <p>The values for the out-of-sample RMSE will vary depending on what
@@ -465,21 +466,21 @@ performance.</p>
 <ul>
 <li>We start by setting a random seed to be able to reproduce the example.</li>
 <li>We specify the method (the learning algorithm) we want to use. Here,
-we use <code>"lm"</code>, but, as we will see later, there are many others to
-choose from<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</li>
+we use <code>&quot;lm&quot;</code>, but, as we will see later, there are many others to
+choose from<a href="final-notes.html#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</li>
 <li>We then set the out-of-sample training procedure to 10-fold cross
-validation (<code>method = "cv"</code> and <code>number = 10</code>). To simplify the
+validation (<code>method = &quot;cv&quot;</code> and <code>number = 10</code>). To simplify the
 output in the material for better readability, we set the verbosity
 flag to <code>FALSE</code>, but it is useful to set it to <code>TRUE</code> in interactive
 mode.</li>
 </ul>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-model &lt;-<span class="st"> </span><span class="kw">train</span>(price <span class="op">~</span><span class="st"> </span>., diamonds,
-               <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,
-               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,
-                                        <span class="dt">number =</span> <span class="dv">10</span>,
-                                        <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>))
-model</code></pre>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb78-2" data-line-number="2">model &lt;-<span class="st"> </span><span class="kw">train</span>(price <span class="op">~</span><span class="st"> </span>., diamonds,</a>
+<a class="sourceLine" id="cb78-3" data-line-number="3">               <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb78-4" data-line-number="4">               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,</a>
+<a class="sourceLine" id="cb78-5" data-line-number="5">                                        <span class="dt">number =</span> <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb78-6" data-line-number="6">                                        <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb78-7" data-line-number="7">model</a></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 53940 samples
@@ -496,10 +497,10 @@ model</code></pre>
 ## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
 <p>Once we have trained our model, we can directly use this <code>train</code>
 object as input to the <code>predict</code> method:</p>
-<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, diamonds)
-error &lt;-<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>diamonds<span class="op">$</span>price
-rmse_xval &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(error<span class="op">^</span><span class="dv">2</span>)) <span class="co">## xval RMSE</span>
-rmse_xval</code></pre>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, diamonds)</a>
+<a class="sourceLine" id="cb80-2" data-line-number="2">error &lt;-<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>diamonds<span class="op">$</span>price</a>
+<a class="sourceLine" id="cb80-3" data-line-number="3">rmse_xval &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>(error<span class="op">^</span><span class="dv">2</span>)) <span class="co">## xval RMSE</span></a>
+<a class="sourceLine" id="cb80-4" data-line-number="4">rmse_xval</a></code></pre></div>
 <pre><code>## [1] 1129.843</code></pre>
 <blockquote>
 <p>Challenge</p>
@@ -508,14 +509,14 @@ to predict the median value of owner-occupied homes in Boston from
 the <code>Boston</code> dataset as described above. Then calculate the RMSE.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;MASS&quot;</span>)
-<span class="kw">data</span>(Boston)
-model &lt;-<span class="st"> </span><span class="kw">train</span>(medv <span class="op">~</span><span class="st"> </span>.,
-               Boston,
-               <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,
-               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,
-                                        <span class="dt">number =</span> <span class="dv">10</span>))
-model</code></pre>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;MASS&quot;</span>)</a>
+<a class="sourceLine" id="cb82-2" data-line-number="2"><span class="kw">data</span>(Boston)</a>
+<a class="sourceLine" id="cb82-3" data-line-number="3">model &lt;-<span class="st"> </span><span class="kw">train</span>(medv <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb82-4" data-line-number="4">               Boston,</a>
+<a class="sourceLine" id="cb82-5" data-line-number="5">               <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>,</a>
+<a class="sourceLine" id="cb82-6" data-line-number="6">               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,</a>
+<a class="sourceLine" id="cb82-7" data-line-number="7">                                        <span class="dt">number =</span> <span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb82-8" data-line-number="8">model</a></code></pre></div>
 <pre><code>## Linear Regression 
 ## 
 ## 506 samples
@@ -530,9 +531,9 @@ model</code></pre>
 ##   4.838479  0.7301286  3.433261
 ## 
 ## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, Boston)
-<span class="kw">sqrt</span>(<span class="kw">mean</span>(p <span class="op">-</span><span class="st"> </span>Boston<span class="op">$</span>medv)<span class="op">^</span><span class="dv">2</span>)</code></pre>
-<pre><code>## [1] 6.647482e-14</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, Boston)</a>
+<a class="sourceLine" id="cb84-2" data-line-number="2"><span class="kw">sqrt</span>(<span class="kw">mean</span>((p <span class="op">-</span><span class="st"> </span>Boston<span class="op">$</span>medv)<span class="op">^</span><span class="dv">2</span>))</a></code></pre></div>
+<pre><code>## [1] 4.679191</code></pre>
 </details>
 </div>
 </div>
@@ -580,26 +581,26 @@ every result with a probability &gt; 0.5 to <em>Yes</em> and <em>No</em> otherwi
 <p>Let’s experiment with this using the <code>Sonar</code> dataset, and see if we
 can differentiate mines from rocks using a logistic classification
 model use the <code>glm</code> function from the <em><a href="https://CRAN.R-project.org/package=stats">stats</a></em> package.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;mlbench&quot;</span>)
-<span class="kw">data</span>(Sonar)
-<span class="co">## 60/40 split</span>
-tr &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Sonar), <span class="kw">round</span>(<span class="kw">nrow</span>(Sonar) <span class="op">*</span><span class="st"> </span><span class="fl">0.6</span>))
-train &lt;-<span class="st"> </span>Sonar[tr, ]
-test &lt;-<span class="st"> </span>Sonar[<span class="op">-</span>tr, ]</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">glm</span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)
-p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, test, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)
-<span class="kw">summary</span>(p)</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;mlbench&quot;</span>)</a>
+<a class="sourceLine" id="cb86-2" data-line-number="2"><span class="kw">data</span>(Sonar)</a>
+<a class="sourceLine" id="cb86-3" data-line-number="3"><span class="co">## 60/40 split</span></a>
+<a class="sourceLine" id="cb86-4" data-line-number="4">tr &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">nrow</span>(Sonar), <span class="kw">round</span>(<span class="kw">nrow</span>(Sonar) <span class="op">*</span><span class="st"> </span><span class="fl">0.6</span>))</a>
+<a class="sourceLine" id="cb86-5" data-line-number="5">train &lt;-<span class="st"> </span>Sonar[tr, ]</a>
+<a class="sourceLine" id="cb86-6" data-line-number="6">test &lt;-<span class="st"> </span>Sonar[<span class="op">-</span>tr, ]</a></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">model &lt;-<span class="st"> </span><span class="kw">glm</span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> train, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)</a>
+<a class="sourceLine" id="cb87-2" data-line-number="2">p &lt;-<span class="st"> </span><span class="kw">predict</span>(model, test, <span class="dt">type =</span> <span class="st">&quot;response&quot;</span>)</a>
+<a class="sourceLine" id="cb87-3" data-line-number="3"><span class="kw">summary</span>(p)</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.0000  0.0000  0.8545  0.5123  1.0000  1.0000</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">cl &lt;-<span class="st"> </span><span class="kw">ifelse</span>(p <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;R&quot;</span>)
-<span class="kw">table</span>(cl, test<span class="op">$</span>Class)</code></pre>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" data-line-number="1">cl &lt;-<span class="st"> </span><span class="kw">ifelse</span>(p <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.5</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;R&quot;</span>)</a>
+<a class="sourceLine" id="cb89-2" data-line-number="2"><span class="kw">table</span>(cl, test<span class="op">$</span>Class)</a></code></pre></div>
 <pre><code>##    
 ## cl   M  R
 ##   M 12 31
 ##   R 31  9</code></pre>
 <p>The caret package offers its own, more informative function to
 calculate a confusion matrix:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">factor</span>(cl), test<span class="op">$</span>Class)</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="kw">confusionMatrix</span>(<span class="kw">factor</span>(cl), test<span class="op">$</span>Class)</a></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -642,7 +643,7 @@ calculate a confusion matrix:</p>
 0.1 and 0.9.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">factor</span>(<span class="kw">ifelse</span>(p <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.9</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;R&quot;</span>)), test<span class="op">$</span>Class)</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="kw">confusionMatrix</span>(<span class="kw">factor</span>(<span class="kw">ifelse</span>(p <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.9</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;R&quot;</span>)), test<span class="op">$</span>Class)</a></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -670,7 +671,7 @@ calculate a confusion matrix:</p>
 ##                                           
 ##        &#39;Positive&#39; Class : M               
 ## </code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">confusionMatrix</span>(<span class="kw">factor</span>(<span class="kw">ifelse</span>(p <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;R&quot;</span>)), test<span class="op">$</span>Class)</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="kw">confusionMatrix</span>(<span class="kw">factor</span>(<span class="kw">ifelse</span>(p <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.1</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;R&quot;</span>)), test<span class="op">$</span>Class)</a></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -714,7 +715,7 @@ possible to automate the calculation of the TP and FP rates at each
 threshold and visualise all results along a ROC curve.</p>
 <p>This can be done with the <code>colAUC</code> function from the
 <em><a href="https://CRAN.R-project.org/package=caTools">caTools</a></em> package:</p>
-<pre class="sourceCode r"><code class="sourceCode r">caTools<span class="op">::</span><span class="kw">colAUC</span>(p, test[[<span class="st">&quot;Class&quot;</span>]], <span class="dt">plotROC =</span> <span class="ot">TRUE</span>)</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1">caTools<span class="op">::</span><span class="kw">colAUC</span>(p, test[[<span class="st">&quot;Class&quot;</span>]], <span class="dt">plotROC =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <pre><code>##              [,1]
 ## M vs. R 0.7767442</code></pre>
@@ -739,21 +740,21 @@ the model performance along all possible thresholds:</p>
 <p>When using <em><a href="https://CRAN.R-project.org/package=caret">caret</a></em>’s <code>trainControl</code> function to train a
 model, we can set it so that it computes the ROC and AUC properties
 for us.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co">## Create trainControl object: myControl</span>
-myControl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(
-    <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="co">## cross validation</span>
-    <span class="dt">number =</span> <span class="dv">10</span>,   <span class="co">## 10-fold</span>
-    <span class="dt">summaryFunction =</span> twoClassSummary, <span class="co">## NEW</span>
-    <span class="dt">classProbs =</span> <span class="ot">TRUE</span>, <span class="co"># IMPORTANT</span>
-    <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>
-)
-<span class="co">## Train glm with custom trainControl: model</span>
-model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>., Sonar,
-               <span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="co">## to use glm&#39;s logistic regression</span>
-               <span class="dt">trControl =</span> myControl)
-
-<span class="co">## Print model to console</span>
-<span class="kw">print</span>(model)</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1"><span class="co">## Create trainControl object: myControl</span></a>
+<a class="sourceLine" id="cb99-2" data-line-number="2">myControl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(</a>
+<a class="sourceLine" id="cb99-3" data-line-number="3">    <span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="co">## cross validation</span></a>
+<a class="sourceLine" id="cb99-4" data-line-number="4">    <span class="dt">number =</span> <span class="dv">10</span>,   <span class="co">## 10-fold</span></a>
+<a class="sourceLine" id="cb99-5" data-line-number="5">    <span class="dt">summaryFunction =</span> twoClassSummary, <span class="co">## NEW</span></a>
+<a class="sourceLine" id="cb99-6" data-line-number="6">    <span class="dt">classProbs =</span> <span class="ot">TRUE</span>, <span class="co"># IMPORTANT</span></a>
+<a class="sourceLine" id="cb99-7" data-line-number="7">    <span class="dt">verboseIter =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb99-8" data-line-number="8">)</a>
+<a class="sourceLine" id="cb99-9" data-line-number="9"><span class="co">## Train glm with custom trainControl: model</span></a>
+<a class="sourceLine" id="cb99-10" data-line-number="10">model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>., Sonar,</a>
+<a class="sourceLine" id="cb99-11" data-line-number="11">               <span class="dt">method =</span> <span class="st">&quot;glm&quot;</span>, <span class="co">## to use glm&#39;s logistic regression</span></a>
+<a class="sourceLine" id="cb99-12" data-line-number="12">               <span class="dt">trControl =</span> myControl)</a>
+<a class="sourceLine" id="cb99-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb99-14" data-line-number="14"><span class="co">## Print model to console</span></a>
+<a class="sourceLine" id="cb99-15" data-line-number="15"><span class="kw">print</span>(model)</a></code></pre></div>
 <pre><code>## Generalized Linear Model 
 ## 
 ## 208 samples
@@ -794,19 +795,19 @@ decision simpler by breaking it down into smaller, simpler decisions
 using a divide-and-conquer strategy. They basically identify a set of
 if-else conditions that split the data according to the value of the
 features.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;rpart&quot;</span>) <span class="co">## recursive partitioning</span>
-m &lt;-<span class="st"> </span><span class="kw">rpart</span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> Sonar,
-           <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>)
-<span class="kw">library</span>(<span class="st">&quot;rpart.plot&quot;</span>)
-<span class="kw">rpart.plot</span>(m)</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;rpart&quot;</span>) <span class="co">## recursive partitioning</span></a>
+<a class="sourceLine" id="cb101-2" data-line-number="2">m &lt;-<span class="st"> </span><span class="kw">rpart</span>(Class <span class="op">~</span><span class="st"> </span>., <span class="dt">data =</span> Sonar,</a>
+<a class="sourceLine" id="cb101-3" data-line-number="3">           <span class="dt">method =</span> <span class="st">&quot;class&quot;</span>)</a>
+<a class="sourceLine" id="cb101-4" data-line-number="4"><span class="kw">library</span>(<span class="st">&quot;rpart.plot&quot;</span>)</a>
+<a class="sourceLine" id="cb101-5" data-line-number="5"><span class="kw">rpart.plot</span>(m)</a></code></pre></div>
 <div class="figure"><span id="fig:rpart"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/rpart-1.png" alt="Descision tree with its if-else conditions" width="672" />
 <p class="caption">
 Figure 5.2: Descision tree with its if-else conditions
 </p>
 </div>
-<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">predict</span>(m, Sonar, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)
-<span class="kw">table</span>(p, Sonar<span class="op">$</span>Class)</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">predict</span>(m, Sonar, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</a>
+<a class="sourceLine" id="cb102-2" data-line-number="2"><span class="kw">table</span>(p, Sonar<span class="op">$</span>Class)</a></code></pre></div>
 <pre><code>##    
 ## p    M  R
 ##   M 95 10
@@ -835,11 +836,11 @@ classification accuracy are removed.</p></li>
 <h3><span class="header-section-number">5.5.2</span> Training a random forest</h3>
 <p>Let’s return to random forests and train a model using the <code>train</code>
 function from <em><a href="https://CRAN.R-project.org/package=caret">caret</a></em>:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">12</span>)
-model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>.,
-               <span class="dt">data =</span> Sonar,
-               <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>)
-<span class="kw">print</span>(model)</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb104-2" data-line-number="2">model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb104-3" data-line-number="3">               <span class="dt">data =</span> Sonar,</a>
+<a class="sourceLine" id="cb104-4" data-line-number="4">               <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>)</a>
+<a class="sourceLine" id="cb104-5" data-line-number="5"><span class="kw">print</span>(model)</a></code></pre></div>
 <pre><code>## Random Forest 
 ## 
 ## 208 samples
@@ -861,9 +862,9 @@ model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span cl
 ## 
 ## Tuning parameter &#39;min.node.size&#39; was held constant at a value of 1
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were mtry = 31, splitrule =
-##  extratrees and min.node.size = 1.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(model)</code></pre>
+## The final values used for the model were mtry = 31, splitrule = extratrees
+##  and min.node.size = 1.</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1"><span class="kw">plot</span>(model)</a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/rfplotmodel-1.png" width="672" /></p>
 <p>The main hyperparameter is <em>mtry</em>, i.e. the number of randomly selected
 variables used at each split. Two variables produce random models, while
@@ -873,22 +874,22 @@ over-fitting. The <code>caret</code> package can automate the tuning of the hype
 (that sets the number of hyperparameter values to test) or directly
 defining the <code>tuneGrid</code> (the hyperparameter values), which requires
 knowledge of the model.</p>
-<pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>.,
-               <span class="dt">data =</span> Sonar,
-               <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>,
-               <span class="dt">tuneLength =</span> <span class="dv">5</span>)</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-myGrid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">mtry =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>),
-                      <span class="dt">splitrule =</span> <span class="kw">c</span>(<span class="st">&quot;gini&quot;</span>, <span class="st">&quot;extratrees&quot;</span>),
-                      <span class="dt">min.node.size =</span> <span class="dv">1</span>) <span class="co">## Minimal node size; default 1 for classification</span>
-model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>.,
-               <span class="dt">data =</span> Sonar,
-               <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>,
-               <span class="dt">tuneGrid =</span> myGrid,
-               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,
-                                       <span class="dt">number =</span> <span class="dv">5</span>,
-                                       <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>))
-<span class="kw">print</span>(model)</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1">model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb107-2" data-line-number="2">               <span class="dt">data =</span> Sonar,</a>
+<a class="sourceLine" id="cb107-3" data-line-number="3">               <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>,</a>
+<a class="sourceLine" id="cb107-4" data-line-number="4">               <span class="dt">tuneLength =</span> <span class="dv">5</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb108-2" data-line-number="2">myGrid &lt;-<span class="st"> </span><span class="kw">expand.grid</span>(<span class="dt">mtry =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">40</span>, <span class="dv">60</span>),</a>
+<a class="sourceLine" id="cb108-3" data-line-number="3">                      <span class="dt">splitrule =</span> <span class="kw">c</span>(<span class="st">&quot;gini&quot;</span>, <span class="st">&quot;extratrees&quot;</span>),</a>
+<a class="sourceLine" id="cb108-4" data-line-number="4">                      <span class="dt">min.node.size =</span> <span class="dv">1</span>) <span class="co">## Minimal node size; default 1 for classification</span></a>
+<a class="sourceLine" id="cb108-5" data-line-number="5">model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb108-6" data-line-number="6">               <span class="dt">data =</span> Sonar,</a>
+<a class="sourceLine" id="cb108-7" data-line-number="7">               <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>,</a>
+<a class="sourceLine" id="cb108-8" data-line-number="8">               <span class="dt">tuneGrid =</span> myGrid,</a>
+<a class="sourceLine" id="cb108-9" data-line-number="9">               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,</a>
+<a class="sourceLine" id="cb108-10" data-line-number="10">                                       <span class="dt">number =</span> <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb108-11" data-line-number="11">                                       <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb108-12" data-line-number="12"><span class="kw">print</span>(model)</a></code></pre></div>
 <pre><code>## Random Forest 
 ## 
 ## 208 samples
@@ -914,9 +915,9 @@ model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span cl
 ## 
 ## Tuning parameter &#39;min.node.size&#39; was held constant at a value of 1
 ## Accuracy was used to select the optimal model using the largest value.
-## The final values used for the model were mtry = 20, splitrule =
-##  extratrees and min.node.size = 1.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(model)</code></pre>
+## The final values used for the model were mtry = 20, splitrule = extratrees
+##  and min.node.size = 1.</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">plot</span>(model)</a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/tuneGrid-1.png" width="672" /></p>
 <blockquote>
 <p>Challenge</p>
@@ -924,15 +925,15 @@ model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span cl
 by using 5-fold cross validation, and setting a <code>tuneLength</code> of 5.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">42</span>)
-model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>.,
-               <span class="dt">data =</span> Sonar,
-               <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>,
-               <span class="dt">tuneLength =</span> <span class="dv">5</span>,
-               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,
-                                        <span class="dt">number =</span> <span class="dv">5</span>,
-                                        <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>))
-<span class="kw">plot</span>(model)</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb111-2" data-line-number="2">model &lt;-<span class="st"> </span><span class="kw">train</span>(Class <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb111-3" data-line-number="3">               <span class="dt">data =</span> Sonar,</a>
+<a class="sourceLine" id="cb111-4" data-line-number="4">               <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>,</a>
+<a class="sourceLine" id="cb111-5" data-line-number="5">               <span class="dt">tuneLength =</span> <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb111-6" data-line-number="6">               <span class="dt">trControl =</span> <span class="kw">trainControl</span>(<span class="dt">method =</span> <span class="st">&quot;cv&quot;</span>,</a>
+<a class="sourceLine" id="cb111-7" data-line-number="7">                                        <span class="dt">number =</span> <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb111-8" data-line-number="8">                                        <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb111-9" data-line-number="9"><span class="kw">plot</span>(model)</a></code></pre></div>
 <img src="IntroMachineLearningWithR_files/figure-html/rftrainsol-1.png" width="672" />
 </details>
 </div>
@@ -970,12 +971,12 @@ on quantitative proteomics data).</p>
 the <code>mtcars</code> dataset. Below, we will want to predict the <code>mpg</code>
 variable using <code>cyl</code>, <code>disp</code>, and <code>hp</code>, with the latter containing 10
 missing values.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(mtcars)
-mtcars[<span class="kw">sample</span>(<span class="kw">nrow</span>(mtcars), <span class="dv">10</span>), <span class="st">&quot;hp&quot;</span>] &lt;-<span class="st"> </span><span class="ot">NA</span>
-Y &lt;-<span class="st"> </span>mtcars<span class="op">$</span>mpg    <span class="co">## target variable</span>
-X &lt;-<span class="st"> </span>mtcars[, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>] <span class="co">## predictors</span></code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">data</span>(mtcars)</a>
+<a class="sourceLine" id="cb112-2" data-line-number="2">mtcars[<span class="kw">sample</span>(<span class="kw">nrow</span>(mtcars), <span class="dv">10</span>), <span class="st">&quot;hp&quot;</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb112-3" data-line-number="3">Y &lt;-<span class="st"> </span>mtcars<span class="op">$</span>mpg    <span class="co">## target variable</span></a>
+<a class="sourceLine" id="cb112-4" data-line-number="4">X &lt;-<span class="st"> </span>mtcars[, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>] <span class="co">## predictors</span></a></code></pre></div>
 <p>If we now wanted to train a model (using the non-formula interface):</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">try</span>(<span class="kw">train</span>(X, Y))</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" data-line-number="1"><span class="kw">try</span>(<span class="kw">train</span>(X, Y))</a></code></pre></div>
 <pre><code>## note: only 2 unique complexity parameters in default grid. Truncating the grid to 2 .
 ## 
 ## Something is wrong; all the RMSE metric values are missing:
@@ -998,7 +999,7 @@ methods, that can directly be passed when training the model.</p>
 <h3><span class="header-section-number">5.6.2</span> Median imputation</h3>
 <p>Imputation using median of features. This method works well if the
 data are missing at random.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;medianImpute&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;medianImpute&quot;</span>)</a></code></pre></div>
 <pre><code>## note: only 2 unique complexity parameters in default grid. Truncating the grid to 2 .</code></pre>
 <pre><code>## Random Forest 
 ## 
@@ -1026,7 +1027,7 @@ inside each fold.</p>
 imputation is known to produce incorrect results. kNN imputation will
 impute missing values using other, similar non-missing rows. The
 default value is 5.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;knnImpute&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;knnImpute&quot;</span>)</a></code></pre></div>
 <pre><code>## note: only 2 unique complexity parameters in default grid. Truncating the grid to 2 .</code></pre>
 <pre><code>## Random Forest 
 ## 
@@ -1054,18 +1055,18 @@ algorithm. Scaling (division by the standard deviation) and centering
 (subtraction of the mean) can also be applied directly during model
 training by setting. Note that they are set to be applied by default
 prior to training.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;scale&quot;</span>)
-<span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;center&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;scale&quot;</span>)</a>
+<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;center&quot;</span>)</a></code></pre></div>
 <p>As we have discussed in the section on Principal Component
 Analysis, PCA can be used as pre-processing method, generating a set
 of high-variance and perpendicular predictors, preventing
 collinearity.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;pca&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="st">&quot;pca&quot;</span>)</a></code></pre></div>
 <div id="multiple-pre-processing-methods" class="section level3">
 <h3><span class="header-section-number">5.7.1</span> Multiple pre-processing methods</h3>
 <p>It is possible to chain multiple processing methods: imputation,
 center, scale, pca.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;knnImpute&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>, <span class="st">&quot;pca&quot;</span>))</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="kw">train</span>(X, Y, <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;knnImpute&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;scale&quot;</span>, <span class="st">&quot;pca&quot;</span>))</a></code></pre></div>
 <pre><code>## note: only 2 unique complexity parameters in default grid. Truncating the grid to 2 .</code></pre>
 <pre><code>## Random Forest 
 ## 
@@ -1109,20 +1110,21 @@ comparison between the different models.</p>
 <p>For this section, we are going to use the <code>churn</code> data. Below, we see
 that about 15% of the customers churn. It is important to maintain
 this proportion in all of the folds.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;C50&quot;</span>)
-<span class="kw">data</span>(churn)
-<span class="kw">table</span>(churnTrain<span class="op">$</span>churn)<span class="op">/</span><span class="kw">nrow</span>(churnTrain)</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;C50&quot;</span>)</a>
+<a class="sourceLine" id="cb126-2" data-line-number="2"><span class="kw">data</span>(churn)</a></code></pre></div>
+<pre><code>## Warning in data(churn): data set &#39;churn&#39; not found</code></pre>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1"><span class="kw">table</span>(churnTrain<span class="op">$</span>churn)<span class="op">/</span><span class="kw">nrow</span>(churnTrain)</a></code></pre></div>
 <pre><code>## 
 ##       yes        no 
 ## 0.1449145 0.8550855</code></pre>
 <p>Previously, when creating a train control object, we specified the
-method as <code>"cv"</code> and the number of folds. Now, as we want the same
+method as <code>&quot;cv&quot;</code> and the number of folds. Now, as we want the same
 folds to be re-used over multiple model training rounds, we are going
 to pass the train/test splits directly. These splits are created with
 the <code>createFolds</code> function, which creates a list (here of length 5)
 containing the element indices for each fold.</p>
-<pre class="sourceCode r"><code class="sourceCode r">myFolds &lt;-<span class="st"> </span><span class="kw">createFolds</span>(churnTrain<span class="op">$</span>churn, <span class="dt">k =</span> <span class="dv">5</span>)
-<span class="kw">str</span>(myFolds)</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">myFolds &lt;-<span class="st"> </span><span class="kw">createFolds</span>(churnTrain<span class="op">$</span>churn, <span class="dt">k =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb130-2" data-line-number="2"><span class="kw">str</span>(myFolds)</a></code></pre></div>
 <pre><code>## List of 5
 ##  $ Fold1: int [1:667] 3 7 13 17 20 36 39 48 52 62 ...
 ##  $ Fold2: int [1:667] 4 10 12 24 25 29 41 42 47 50 ...
@@ -1134,35 +1136,35 @@ containing the element indices for each fold.</p>
 <p>Verify that the folds maintain the proportion of yes/no results.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sapply</span>(myFolds, <span class="cf">function</span>(i) {
-    <span class="kw">table</span>(churnTrain<span class="op">$</span>churn[i])<span class="op">/</span><span class="kw">length</span>(i)
-})</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1"><span class="kw">sapply</span>(myFolds, <span class="cf">function</span>(i) {</a>
+<a class="sourceLine" id="cb132-2" data-line-number="2">    <span class="kw">table</span>(churnTrain<span class="op">$</span>churn[i])<span class="op">/</span><span class="kw">length</span>(i)</a>
+<a class="sourceLine" id="cb132-3" data-line-number="3">})</a></code></pre></div>
 <pre><code>##         Fold1     Fold2     Fold3     Fold4     Fold5
 ## yes 0.1454273 0.1454273 0.1454273 0.1441441 0.1441441
 ## no  0.8545727 0.8545727 0.8545727 0.8558559 0.8558559</code></pre>
 </details>
 <p>We can now a train control object to be reused consistently for
 different model trainings.</p>
-<pre class="sourceCode r"><code class="sourceCode r">myControl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(
-  <span class="dt">summaryFunction =</span> twoClassSummary,
-  <span class="dt">classProb =</span> <span class="ot">TRUE</span>,
-  <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>,
-  <span class="dt">savePredictions =</span> <span class="ot">TRUE</span>,
-  <span class="dt">index =</span> myFolds
-)</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" data-line-number="1">myControl &lt;-<span class="st"> </span><span class="kw">trainControl</span>(</a>
+<a class="sourceLine" id="cb134-2" data-line-number="2">  <span class="dt">summaryFunction =</span> twoClassSummary,</a>
+<a class="sourceLine" id="cb134-3" data-line-number="3">  <span class="dt">classProb =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb134-4" data-line-number="4">  <span class="dt">verboseIter =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb134-5" data-line-number="5">  <span class="dt">savePredictions =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb134-6" data-line-number="6">  <span class="dt">index =</span> myFolds</a>
+<a class="sourceLine" id="cb134-7" data-line-number="7">)</a></code></pre></div>
 <div id="glmnet-model" class="section level3">
 <h3><span class="header-section-number">5.8.1</span> <code>glmnet</code> model</h3>
 <p>The <code>glmnet</code> is a linear model with built-in variable selection and
 coefficient regularisation.</p>
-<pre class="sourceCode r"><code class="sourceCode r">glm_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,
-                   churnTrain,
-                   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,
-                   <span class="dt">method =</span> <span class="st">&quot;glmnet&quot;</span>,
-                   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(
-                       <span class="dt">alpha =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1</span>,
-                       <span class="dt">lambda =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span><span class="op">/</span><span class="dv">10</span>),
-                   <span class="dt">trControl =</span> myControl)
-<span class="kw">print</span>(glm_model)</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1">glm_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb135-2" data-line-number="2">                   churnTrain,</a>
+<a class="sourceLine" id="cb135-3" data-line-number="3">                   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</a>
+<a class="sourceLine" id="cb135-4" data-line-number="4">                   <span class="dt">method =</span> <span class="st">&quot;glmnet&quot;</span>,</a>
+<a class="sourceLine" id="cb135-5" data-line-number="5">                   <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(</a>
+<a class="sourceLine" id="cb135-6" data-line-number="6">                       <span class="dt">alpha =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb135-7" data-line-number="7">                       <span class="dt">lambda =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">10</span><span class="op">/</span><span class="dv">10</span>),</a>
+<a class="sourceLine" id="cb135-8" data-line-number="8">                   <span class="dt">trControl =</span> myControl)</a>
+<a class="sourceLine" id="cb135-9" data-line-number="9"><span class="kw">print</span>(glm_model)</a></code></pre></div>
 <pre><code>## glmnet 
 ## 
 ## 3333 samples
@@ -1195,11 +1197,12 @@ coefficient regularisation.</p>
 ##   1      0.6     0.5000000  0.000000000  1.0000000
 ##   1      0.7     0.5000000  0.000000000  1.0000000
 ##   1      0.8     0.5000000  0.000000000  1.0000000
-##  [ reached getOption(&quot;max.print&quot;) -- omitted 2 rows ]
+##   1      0.9     0.5000000  0.000000000  1.0000000
+##   1      1.0     0.5000000  0.000000000  1.0000000
 ## 
 ## ROC was used to select the optimal model using the largest value.
 ## The final values used for the model were alpha = 0 and lambda = 0.2.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(glm_model)</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">plot</span>(glm_model)</a></code></pre></div>
 <p><img src="IntroMachineLearningWithR_files/figure-html/glmnetmodel-1.png" width="672" /></p>
 <p>Below, we are going to repeat this same modelling with a variety of
 different classifiers, some of which we haven’t looked at. This
@@ -1218,16 +1221,16 @@ depending on the tuning parameter settings.</p>
 control object.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">rf_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,
-                  churnTrain,
-                  <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,
-                  <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>,
-                  <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(
-                      <span class="dt">mtry =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">19</span>),
-                      <span class="dt">splitrule =</span> <span class="kw">c</span>(<span class="st">&quot;gini&quot;</span>, <span class="st">&quot;extratrees&quot;</span>),
-                      <span class="dt">min.node.size =</span> <span class="dv">1</span>),
-                  <span class="dt">trControl =</span> myControl)
-<span class="kw">print</span>(rf_model)</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1">rf_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb138-2" data-line-number="2">                  churnTrain,</a>
+<a class="sourceLine" id="cb138-3" data-line-number="3">                  <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</a>
+<a class="sourceLine" id="cb138-4" data-line-number="4">                  <span class="dt">method =</span> <span class="st">&quot;ranger&quot;</span>,</a>
+<a class="sourceLine" id="cb138-5" data-line-number="5">                  <span class="dt">tuneGrid =</span> <span class="kw">expand.grid</span>(</a>
+<a class="sourceLine" id="cb138-6" data-line-number="6">                      <span class="dt">mtry =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">19</span>),</a>
+<a class="sourceLine" id="cb138-7" data-line-number="7">                      <span class="dt">splitrule =</span> <span class="kw">c</span>(<span class="st">&quot;gini&quot;</span>, <span class="st">&quot;extratrees&quot;</span>),</a>
+<a class="sourceLine" id="cb138-8" data-line-number="8">                      <span class="dt">min.node.size =</span> <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb138-9" data-line-number="9">                  <span class="dt">trControl =</span> myControl)</a>
+<a class="sourceLine" id="cb138-10" data-line-number="10"><span class="kw">print</span>(rf_model)</a></code></pre></div>
 <pre><code>## Random Forest 
 ## 
 ## 3333 samples
@@ -1253,7 +1256,7 @@ control object.</p>
 ## ROC was used to select the optimal model using the largest value.
 ## The final values used for the model were mtry = 19, splitrule = gini
 ##  and min.node.size = 1.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(rf_model)</code></pre>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1"><span class="kw">plot</span>(rf_model)</a></code></pre></div>
 <img src="IntroMachineLearningWithR_files/figure-html/rfmodel-1.png" width="672" />
 </details>
 </div>
@@ -1265,13 +1268,13 @@ control object.</p>
 control object.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">knn_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,
-                   churnTrain,
-                   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,
-                   <span class="dt">method =</span> <span class="st">&quot;knn&quot;</span>,
-                   <span class="dt">tuneLength =</span> <span class="dv">20</span>,
-                   <span class="dt">trControl =</span> myControl)
-<span class="kw">print</span>(knn_model)</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1">knn_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb141-2" data-line-number="2">                   churnTrain,</a>
+<a class="sourceLine" id="cb141-3" data-line-number="3">                   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</a>
+<a class="sourceLine" id="cb141-4" data-line-number="4">                   <span class="dt">method =</span> <span class="st">&quot;knn&quot;</span>,</a>
+<a class="sourceLine" id="cb141-5" data-line-number="5">                   <span class="dt">tuneLength =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb141-6" data-line-number="6">                   <span class="dt">trControl =</span> myControl)</a>
+<a class="sourceLine" id="cb141-7" data-line-number="7"><span class="kw">print</span>(knn_model)</a></code></pre></div>
 <pre><code>## k-Nearest Neighbors 
 ## 
 ## 3333 samples
@@ -1307,7 +1310,7 @@ control object.</p>
 ## 
 ## ROC was used to select the optimal model using the largest value.
 ## The final value used for the model was k = 37.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(knn_model)</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">plot</span>(knn_model)</a></code></pre></div>
 <img src="IntroMachineLearningWithR_files/figure-html/knnmodel-1.png" width="672" />
 </details>
 </div>
@@ -1320,13 +1323,13 @@ object. Hint: Look at <code>names(getModelInfo())</code> for all possible model
 names.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">svm_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,
-                   churnTrain,
-                   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,
-                   <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>,
-                   <span class="dt">tuneLength =</span> <span class="dv">10</span>,
-                   <span class="dt">trControl =</span> myControl)
-<span class="kw">print</span>(svm_model)</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1">svm_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb144-2" data-line-number="2">                   churnTrain,</a>
+<a class="sourceLine" id="cb144-3" data-line-number="3">                   <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</a>
+<a class="sourceLine" id="cb144-4" data-line-number="4">                   <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>,</a>
+<a class="sourceLine" id="cb144-5" data-line-number="5">                   <span class="dt">tuneLength =</span> <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb144-6" data-line-number="6">                   <span class="dt">trControl =</span> myControl)</a>
+<a class="sourceLine" id="cb144-7" data-line-number="7"><span class="kw">print</span>(svm_model)</a></code></pre></div>
 <pre><code>## Support Vector Machines with Radial Basis Function Kernel 
 ## 
 ## 3333 samples
@@ -1353,7 +1356,7 @@ names.</p>
 ## Tuning parameter &#39;sigma&#39; was held constant at a value of 0.007417943
 ## ROC was used to select the optimal model using the largest value.
 ## The final values used for the model were sigma = 0.007417943 and C = 8.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(svm_model)</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw">plot</span>(svm_model)</a></code></pre></div>
 <img src="IntroMachineLearningWithR_files/figure-html/svmmodel-1.png" width="672" />
 </details>
 </div>
@@ -1365,13 +1368,13 @@ names.</p>
 control object.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">nb_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,
-                  churnTrain,
-                  <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,
-                  <span class="dt">method =</span> <span class="st">&quot;naive_bayes&quot;</span>,
-                  <span class="dt">trControl =</span> myControl)
-
-<span class="kw">print</span>(nb_model)</code></pre>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1">nb_model &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb147-2" data-line-number="2">                  churnTrain,</a>
+<a class="sourceLine" id="cb147-3" data-line-number="3">                  <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</a>
+<a class="sourceLine" id="cb147-4" data-line-number="4">                  <span class="dt">method =</span> <span class="st">&quot;naive_bayes&quot;</span>,</a>
+<a class="sourceLine" id="cb147-5" data-line-number="5">                  <span class="dt">trControl =</span> myControl)</a>
+<a class="sourceLine" id="cb147-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb147-7" data-line-number="7"><span class="kw">print</span>(nb_model)</a></code></pre></div>
 <pre><code>## Naive Bayes 
 ## 
 ## 3333 samples
@@ -1388,12 +1391,12 @@ control object.</p>
 ##    TRUE      0.8086525  0.0000000  1.00000000
 ## 
 ## Tuning parameter &#39;laplace&#39; was held constant at a value of 0
-## 
-## Tuning parameter &#39;adjust&#39; was held constant at a value of 1
+## Tuning
+##  parameter &#39;adjust&#39; was held constant at a value of 1
 ## ROC was used to select the optimal model using the largest value.
 ## The final values used for the model were laplace = 0, usekernel = TRUE
 ##  and adjust = 1.</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(nb_model)</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">plot</span>(nb_model)</a></code></pre></div>
 <img src="IntroMachineLearningWithR_files/figure-html/nbmodel-1.png" width="672" />
 </details>
 </div>
@@ -1402,13 +1405,13 @@ control object.</p>
 <p>We can now use the <code>caret::resamples</code> function that will compare the
 models and pick the one with the highest AUC and lowest AUC standard
 deviation.</p>
-<pre class="sourceCode r"><code class="sourceCode r">model_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">glmmet =</span> glm_model,
-                   <span class="dt">rf =</span> rf_model,
-                   <span class="dt">knn =</span> knn_model,
-                   <span class="dt">svm =</span> svm_model,
-                   <span class="dt">nb =</span> nb_model)
-resamp &lt;-<span class="st"> </span><span class="kw">resamples</span>(model_list)
-resamp</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1">model_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">glmmet =</span> glm_model,</a>
+<a class="sourceLine" id="cb150-2" data-line-number="2">                   <span class="dt">rf =</span> rf_model,</a>
+<a class="sourceLine" id="cb150-3" data-line-number="3">                   <span class="dt">knn =</span> knn_model,</a>
+<a class="sourceLine" id="cb150-4" data-line-number="4">                   <span class="dt">svm =</span> svm_model,</a>
+<a class="sourceLine" id="cb150-5" data-line-number="5">                   <span class="dt">nb =</span> nb_model)</a>
+<a class="sourceLine" id="cb150-6" data-line-number="6">resamp &lt;-<span class="st"> </span><span class="kw">resamples</span>(model_list)</a>
+<a class="sourceLine" id="cb150-7" data-line-number="7">resamp</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## resamples.default(x = model_list)
@@ -1417,7 +1420,7 @@ resamp</code></pre>
 ## Number of resamples: 5 
 ## Performance metrics: ROC, Sens, Spec 
 ## Time estimates for: everything, final model fit</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(resamp)</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">summary</span>(resamp)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## summary.resamples(object = resamp)
@@ -1434,18 +1437,12 @@ resamp</code></pre>
 ## nb     0.7954270 0.8004363 0.8118887 0.8086525 0.8157215 0.8197891    0
 ## 
 ## Sens 
-##               Min.    1st Qu.     Median       Mean    3rd Qu.       Max.
-## glmmet 0.007772021 0.01291990 0.01813472 0.01656157 0.02072539 0.02325581
-## rf     0.511627907 0.54663212 0.58808290 0.58076073 0.62015504 0.63730570
-## knn    0.012919897 0.02590674 0.06476684 0.05487408 0.08010336 0.09067358
-## svm    0.106217617 0.11111111 0.12953368 0.12888300 0.14470284 0.15284974
-## nb     0.000000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000
-##        NA&#39;s
-## glmmet    0
-## rf        0
-## knn       0
-## svm       0
-## nb        0
+##               Min.    1st Qu.     Median       Mean    3rd Qu.       Max. NA&#39;s
+## glmmet 0.007772021 0.01291990 0.01813472 0.01656157 0.02072539 0.02325581    0
+## rf     0.511627907 0.54663212 0.58808290 0.58076073 0.62015504 0.63730570    0
+## knn    0.012919897 0.02590674 0.06476684 0.05487408 0.08010336 0.09067358    0
+## svm    0.106217617 0.11111111 0.12953368 0.12888300 0.14470284 0.15284974    0
+## nb     0.000000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000    0
 ## 
 ## Spec 
 ##             Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA&#39;s
@@ -1454,7 +1451,7 @@ resamp</code></pre>
 ## knn    0.9969298 0.9978070 0.9982456 0.9985088 0.9995614 1.0000000    0
 ## svm    0.9828947 0.9881579 0.9885965 0.9879825 0.9890351 0.9912281    0
 ## nb     1.0000000 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000    0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">lattice<span class="op">::</span><span class="kw">bwplot</span>(resamp, <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1">lattice<span class="op">::</span><span class="kw">bwplot</span>(resamp, <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>)</a></code></pre></div>
 <div class="figure"><span id="fig:plotresam"></span>
 <img src="IntroMachineLearningWithR_files/figure-html/plotresam-1.png" alt="Comparing distributions of AUC values for various models." width="672" />
 <p class="caption">
@@ -1474,25 +1471,25 @@ training for a model that didn’t perform well and assess whether
 pre-processing affected the modelling.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">svm_model1 &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,
-                    churnTrain,
-                    <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,
-                    <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>,
-                    <span class="dt">tuneLength =</span> <span class="dv">10</span>,
-                    <span class="dt">trControl =</span> myControl)
-
-svm_model2 &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,
-                    churnTrain[, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span><span class="op">:</span><span class="dv">20</span>)],
-                    <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,
-                    <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>,
-                    <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;scale&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;pca&quot;</span>),
-                    <span class="dt">tuneLength =</span> <span class="dv">10</span>,
-                    <span class="dt">trControl =</span> myControl)
-
-model_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">svm1 =</span> svm_model1,
-                   <span class="dt">svm2 =</span> svm_model2)
-resamp &lt;-<span class="st"> </span><span class="kw">resamples</span>(model_list)
-<span class="kw">summary</span>(resamp)</code></pre>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1">svm_model1 &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb155-2" data-line-number="2">                    churnTrain,</a>
+<a class="sourceLine" id="cb155-3" data-line-number="3">                    <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</a>
+<a class="sourceLine" id="cb155-4" data-line-number="4">                    <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>,</a>
+<a class="sourceLine" id="cb155-5" data-line-number="5">                    <span class="dt">tuneLength =</span> <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb155-6" data-line-number="6">                    <span class="dt">trControl =</span> myControl)</a>
+<a class="sourceLine" id="cb155-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb155-8" data-line-number="8">svm_model2 &lt;-<span class="st"> </span><span class="kw">train</span>(churn <span class="op">~</span><span class="st"> </span>.,</a>
+<a class="sourceLine" id="cb155-9" data-line-number="9">                    churnTrain[, <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span><span class="op">:</span><span class="dv">20</span>)],</a>
+<a class="sourceLine" id="cb155-10" data-line-number="10">                    <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>,</a>
+<a class="sourceLine" id="cb155-11" data-line-number="11">                    <span class="dt">method =</span> <span class="st">&quot;svmRadial&quot;</span>,</a>
+<a class="sourceLine" id="cb155-12" data-line-number="12">                    <span class="dt">preProcess =</span> <span class="kw">c</span>(<span class="st">&quot;scale&quot;</span>, <span class="st">&quot;center&quot;</span>, <span class="st">&quot;pca&quot;</span>),</a>
+<a class="sourceLine" id="cb155-13" data-line-number="13">                    <span class="dt">tuneLength =</span> <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb155-14" data-line-number="14">                    <span class="dt">trControl =</span> myControl)</a>
+<a class="sourceLine" id="cb155-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb155-16" data-line-number="16">model_list &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">svm1 =</span> svm_model1,</a>
+<a class="sourceLine" id="cb155-17" data-line-number="17">                   <span class="dt">svm2 =</span> svm_model2)</a>
+<a class="sourceLine" id="cb155-18" data-line-number="18">resamp &lt;-<span class="st"> </span><span class="kw">resamples</span>(model_list)</a>
+<a class="sourceLine" id="cb155-19" data-line-number="19"><span class="kw">summary</span>(resamp)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## summary.resamples(object = resamp)
@@ -1514,7 +1511,7 @@ resamp &lt;-<span class="st"> </span><span class="kw">resamples</span>(model_lis
 ##           Min.   1st Qu.    Median      Mean   3rd Qu.      Max. NA&#39;s
 ## svm1 0.9745614 0.9828947 0.9842105 0.9847368 0.9890351 0.9929825    0
 ## svm2 0.9736842 0.9745614 0.9745614 0.9769298 0.9780702 0.9837719    0</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bwplot</span>(resamp, <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>)</code></pre>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="kw">bwplot</span>(resamp, <span class="dt">metric =</span> <span class="st">&quot;ROC&quot;</span>)</a></code></pre></div>
 <img src="IntroMachineLearningWithR_files/figure-html/svmmodel2-1.png" width="672" />
 </details>
 </div>
@@ -1526,8 +1523,8 @@ resamp &lt;-<span class="st"> </span><span class="kw">resamples</span>(model_lis
 the results and apply it to predict the <code>churnTest</code> labels.</p>
 </blockquote>
 <details>
-<pre class="sourceCode r"><code class="sourceCode r">p &lt;-<span class="st"> </span><span class="kw">predict</span>(rf_model, churnTest)
-<span class="kw">confusionMatrix</span>(p, churnTest<span class="op">$</span>churn)</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw">predict</span>(rf_model, churnTest)</a>
+<a class="sourceLine" id="cb158-2" data-line-number="2"><span class="kw">confusionMatrix</span>(p, churnTest<span class="op">$</span>churn)</a></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
 ##           Reference
@@ -1560,15 +1557,6 @@ the results and apply it to predict the <code>churnTest</code> labels.</p>
 </div>
 </div>
 </div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>There are exactly 238 available
-methods. See
-<a href="http://topepo.github.io/caret/train-models-by-tag.html" class="uri">http://topepo.github.io/caret/train-models-by-tag.html</a> for
-details.<a href="supervised-learning.html#fnref1" class="footnote-back">↩</a></p></li>
-</ol>
-</div>
             </section>
 
           </div>
@@ -1580,11 +1568,13 @@ details.<a href="supervised-learning.html#fnref1" class="footnote-back">↩</a><
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -1592,12 +1582,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -1609,6 +1598,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -1627,8 +1620,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

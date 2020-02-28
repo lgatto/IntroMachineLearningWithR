@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Final notes | An Introduction to Machine Learning with R</title>
-  <meta name="description" content="An hands-on introduction to machine learning with R.">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta name="description" content="An hands-on introduction to machine learning with R." />
+  <meta name="generator" content="bookdown 0.17 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Final notes | An Introduction to Machine Learning with R" />
   <meta property="og:type" content="book" />
@@ -22,17 +21,17 @@
   <meta name="twitter:description" content="An hands-on introduction to machine learning with R." />
   
 
-<meta name="author" content="Laurent Gatto">
+<meta name="author" content="Laurent Gatto" />
 
 
-<meta name="date" content="2019-04-24">
+<meta name="date" content="2020-02-28" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="supervised-learning.html">
+<link rel="prev" href="supervised-learning.html"/>
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -41,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,12 +48,14 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+
+
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="libs/datatables-binding-0.5/datatables.js"></script>
-<link href="libs/dt-core-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="libs/dt-core-1.10.16/css/jquery.dataTables.extra.css" rel="stylesheet" />
-<script src="libs/dt-core-1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="libs/datatables-binding-0.12/datatables.js"></script>
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
 <link href="libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
 
@@ -64,7 +66,6 @@ a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
 a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
@@ -76,7 +77,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(title);
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -304,10 +305,10 @@ and Data Carpentry lessons and teaching styles.</p>
 <h2><span class="header-section-number">6.4</span> References and further reading</h2>
 <ul>
 <li>caret: Classification and Regression Training. Max Kuhn.
-<a href="https://CRAN.R-project.org/package=caret">https://CRAN.R-project.org/package=caret</a>.</li>
+<a href="https://CRAN.R-project.org/package=caret" class="uri">https://CRAN.R-project.org/package=caret</a>.</li>
 <li><a href="https://www.springer.com/us/book/9781461468486">Applied predictive modeling</a>,
 Max Kuhn and Kjell Johnson (book webpage
-<a href="http://appliedpredictivemodeling.com/">http://appliedpredictivemodeling.com/</a>)
+<a href="http://appliedpredictivemodeling.com/" class="uri">http://appliedpredictivemodeling.com/</a>)
 and the <a href="https://topepo.github.io/caret/index.html">caret book</a>.</li>
 <li><a href="http://www-bcf.usc.edu/~gareth/ISL/">An Introduction to Statistical Learning (with Applications in
 R)</a>. Gareth James, Daniela
@@ -316,7 +317,7 @@ Witten, Trevor Hastie and Robert Tibshirani.</li>
 B, Lang M, Kotthoff L, Schiffner J, Richter J, Studerus E,
 Casalicchio G and Jones Z (2016). Journal of Machine Learning
 Research, <em>17</em>(170),
-pp. 1-5. <a href="https://github.com/mlr-org/mlr">https://github.com/mlr-org/mlr</a>.</li>
+pp. 1-5. <a href="https://github.com/mlr-org/mlr" class="uri">https://github.com/mlr-org/mlr</a>.</li>
 <li>DataCamp’s
 <a href="https://www.datacamp.com/tracks/machine-learning"><em>Machine Learning with R</em> skill track</a> (requires
 paid access).</li>
@@ -324,72 +325,74 @@ paid access).</li>
 </div>
 <div id="session-information" class="section level2">
 <h2><span class="header-section-number">6.5</span> Session information</h2>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre>
-<pre><code>## R version 3.6.0 RC (2019-04-21 r76409)
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
+<pre><code>## R version 3.6.2 (2019-12-12)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Manjaro Linux
+## Running under: Ubuntu 18.04.4 LTS
 ## 
 ## Matrix products: default
-## BLAS:   /usr/lib/libblas.so.3.8.0
-## LAPACK: /usr/lib/liblapack.so.3.8.0
+## BLAS:   /usr/lib/x86_64-linux-gnu/atlas/libblas.so.3.10.3
+## LAPACK: /usr/lib/x86_64-linux-gnu/atlas/liblapack.so.3.10.3
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [3] LC_TIME=fr_FR.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=fr_FR.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=fr_FR.UTF-8       LC_NAME=C                 
 ##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## [11] LC_MEASUREMENT=fr_FR.UTF-8 LC_IDENTIFICATION=C       
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] Rtsne_0.15          MASS_7.3-51.4       kernlab_0.9-27     
-##  [4] impute_1.57.0       randomForest_4.6-14 rpart.plot_3.0.7   
-##  [7] rpart_4.1-15        ranger_0.11.2       caTools_1.17.1.2   
-## [10] class_7.3-15        knitr_1.22          DT_0.5             
-## [13] naivebayes_0.9.5    glmnet_2.0-16       foreach_1.4.4      
-## [16] Matrix_1.2-17       caret_6.0-83        lattice_0.20-38    
-## [19] C50_0.1.2           mlbench_2.1-1       scales_1.0.0       
-## [22] ggplot2_3.1.1       BiocStyle_2.11.0    dplyr_0.8.0.1      
+##  [1] Rtsne_0.15          modeldata_0.0.1     MASS_7.3-51.5      
+##  [4] kernlab_0.9-29      impute_1.60.0       randomForest_4.6-14
+##  [7] rpart.plot_3.0.8    rpart_4.1-15        ranger_0.12.1      
+## [10] caTools_1.18.0      class_7.3-15        knitr_1.28         
+## [13] DT_0.12             naivebayes_0.9.6    glmnet_3.0-2       
+## [16] Matrix_1.2-18       caret_6.0-85        lattice_0.20-40    
+## [19] C50_0.1.3           mlbench_2.1-1       scales_1.1.0       
+## [22] ggplot2_3.2.1       BiocStyle_2.14.4    dplyr_0.8.4        
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] jsonlite_1.6       splines_3.6.0      prodlim_2018.04.18
-##  [4] shiny_1.3.2        Formula_1.2-3      assertthat_0.2.1  
-##  [7] BiocManager_1.30.4 highr_0.8          stats4_3.6.0      
-## [10] yaml_2.2.0         ipred_0.9-8        pillar_1.3.1      
-## [13] glue_1.3.1         digest_0.6.18      promises_1.0.1    
-## [16] colorspace_1.4-1   recipes_0.1.5      httpuv_1.5.1      
-## [19] htmltools_0.3.6    plyr_1.8.4         timeDate_3043.102 
-## [22] pkgconfig_2.0.2    bookdown_0.9       xtable_1.8-4      
-## [25] purrr_0.3.2        mvtnorm_1.0-10     RANN_2.6.1        
-## [28] later_0.8.0        gower_0.2.0        lava_1.6.5        
-## [31] Cubist_0.2.2       tibble_2.1.1       generics_0.0.2    
-## [34] withr_2.1.2        nnet_7.3-12        lazyeval_0.2.2    
-## [37] mime_0.6           survival_2.44-1.1  magrittr_1.5      
-## [40] crayon_1.3.4       evaluate_0.13      nlme_3.1-139      
-## [43] tools_3.6.0        data.table_1.12.2  stringr_1.4.0     
-## [46] munsell_0.5.0      e1071_1.7-1        compiler_3.6.0    
-## [49] inum_1.0-0         rlang_0.3.4        grid_3.6.0        
-## [52] iterators_1.0.10   rstudioapi_0.10    htmlwidgets_1.3   
-## [55] crosstalk_1.0.0    bitops_1.0-6       rmarkdown_1.12    
-## [58] partykit_1.2-3     gtable_0.3.0       ModelMetrics_1.2.2
-## [61] codetools_0.2-16   reshape2_1.4.3     R6_2.4.0          
-## [64] lubridate_1.7.4    libcoin_1.0-4      stringi_1.4.3     
-## [67] Rcpp_1.0.1         tidyselect_0.2.5   xfun_0.6</code></pre>
+##  [1] nlme_3.1-144         bitops_1.0-6         lubridate_1.7.4     
+##  [4] tools_3.6.2          R6_2.4.1             lazyeval_0.2.2      
+##  [7] colorspace_1.4-1     nnet_7.3-12          withr_2.1.2         
+## [10] tidyselect_1.0.0     compiler_3.6.2       Cubist_0.2.3        
+## [13] bookdown_0.17        mvtnorm_1.0-12       stringr_1.4.0       
+## [16] digest_0.6.24        rmarkdown_2.1        pkgconfig_2.0.3     
+## [19] htmltools_0.4.0      fastmap_1.0.1        highr_0.8           
+## [22] htmlwidgets_1.5.1    rlang_0.4.4          rstudioapi_0.11     
+## [25] shiny_1.4.0          shape_1.4.4          generics_0.0.2      
+## [28] farver_2.0.3         jsonlite_1.6.1       crosstalk_1.0.0     
+## [31] ModelMetrics_1.2.2.1 magrittr_1.5         Formula_1.2-3       
+## [34] Rcpp_1.0.3           munsell_0.5.0        partykit_1.2-6      
+## [37] lifecycle_0.1.0      stringi_1.4.5        pROC_1.16.1         
+## [40] yaml_2.2.1           inum_1.0-1           plyr_1.8.5          
+## [43] recipes_0.1.9        grid_3.6.2           promises_1.1.0      
+## [46] crayon_1.3.4         splines_3.6.2        pillar_1.4.3        
+## [49] reshape2_1.4.3       codetools_0.2-16     stats4_3.6.2        
+## [52] glue_1.3.1           evaluate_0.14        data.table_1.12.8   
+## [55] BiocManager_1.30.10  httpuv_1.5.2         foreach_1.4.8       
+## [58] RANN_2.6.1           gtable_0.3.0         purrr_0.3.3         
+## [61] assertthat_0.2.1     xfun_0.12            gower_0.2.1         
+## [64] mime_0.9             prodlim_2019.11.13   libcoin_1.0-5       
+## [67] xtable_1.8-4         e1071_1.7-3          later_1.0.0         
+## [70] survival_3.1-8       timeDate_3043.102    tibble_2.1.3        
+## [73] iterators_1.0.12     lava_1.6.6           ipred_0.9-9</code></pre>
 
 </div>
 </div>
-
-
-
-
-
-
-
-
-
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>There are exactly 238 available
+methods. See
+<a href="http://topepo.github.io/caret/train-models-by-tag.html" class="uri">http://topepo.github.io/caret/train-models-by-tag.html</a> for
+details.<a href="supervised-learning.html#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
             </section>
 
           </div>
@@ -401,11 +404,13 @@ paid access).</li>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -413,12 +418,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -430,6 +434,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -448,8 +456,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
