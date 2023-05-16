@@ -51,8 +51,8 @@ For more details, see `?mtcars`.
 
 ## Sub-cellular localisation
 
-The `hyperLOPIT2015` data is used to demonstrate t-SNE and its
-comparison to PCA. These data provide sub-cellular localisation of
+The `hyperLOPIT2015` data is used to demonstrate t-distributed stochastic neighbor embedding (t-SNE) and its
+comparison to principal component analysis (PCA). These data provide sub-cellular localisation of
 proteins in Mouse E14TG2a embryonic stem cells, as published
 in [Christoforou et al. (2016)](https://doi.org/10.1038/ncomms9992).
 
